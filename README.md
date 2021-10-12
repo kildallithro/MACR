@@ -1,5 +1,5 @@
 # MACR
-This is an implemention for our SIGKDD 2021 paper based on tensorflow
+This is an implemention for our SIGKDD 2021 paper based on tensorflow  
 cite as:9
 [Model-Agnostic Counterfactual Reasoning for Eliminating Popularity Bias in Recommender System](https://arxiv.org/abs/2010.15363)
 
