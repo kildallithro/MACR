@@ -24,9 +24,9 @@ def load(load_path, filename, **kwargs):
 class Data():
 
     def load_ori_data(self, args):
-        self.path = './data/{}/'.format(args.dataset)
+        self.path = '../data/{}/'.format(args.dataset)
         if args.model == 'mf' or args.model == 'biasmf':
-            if args.source=="dice":
+            if args.source == "dice":
                 self.path = "data/ml10m_dice/"
                 train_record = sp.load_npz(self.path+"train_coo_record.npz").tolil(copy=True)
                 train_skew_record = sp.load_npz(self.path+"train_skew_coo_record.npz").tolil(copy=True)
@@ -64,7 +64,7 @@ class Data():
                         self.n_users = max(self.n_users, user)
                         self.n_items = max(self.n_items, max(items))
                         self.n_train += len(items)
-                if args.valid_set=="valid":
+                if args.valid_set == "valid":
                     with open(valid_file) as f:
                         for line in f.readlines():
                             line = line.strip('\n').split(' ')
@@ -83,7 +83,7 @@ class Data():
                             self.n_items = max(self.n_items, max(items))
                             self.n_valid += len(items)
                     self.valid_users = set(self.valid_user_list.keys())
-                if args.valid_set=="test":
+                if args.valid_set == "test":
                     with open(test_file) as f:
                         for line in f.readlines():
                             line = line.strip('\n').split(' ')
@@ -209,7 +209,7 @@ class Data():
                 for i in range(3):
                     print(countTrainInters[i]/self.n_train, countTestInters[i]/self.n_test, len(countTrainItem[i]), len(countTestItem[i]), len(set(countTestItem[i])&set(countTrainItem[i])))
 
-    def load_imb_data(self):
+    def load_imb_data(self, args):
         if args.model == 'mf':
             if args.dataset == 'movielens_ml_1m' or args.dataset == 'movielens_ml_1m_sorted' or args.dataset == 'movielens_ml_10m' or \
                                                                     args.dataset == 'movielens_ml_10m_sorted' or args.dataset == 'lastfm' or args.dataset == 'addressa' or args.dataset == 'globe':
@@ -377,7 +377,7 @@ class Data():
         for idx in idxs:
             if idx not in countTrainItem.keys():
                 countTrainItem[idx] = 0
-        idxs.sort(key = lambda x:-countTrainItem[x])
+        idxs.sort(key=lambda x: -countTrainItem[x])
         # print(countTrainItem[idxs[0]])
         # print(idxs).
 
@@ -389,7 +389,7 @@ class Data():
         user_max = args.user_max
         user_num_per_cls = []
         cls_num = self.n_items
-        imb_factor = (1.0*args.user_min/args.user_max)# **(1.0/args.lam)
+        imb_factor = (1.0*args.user_min/args.user_max)  # **(1.0/args.lam)
         # print(imb_factor)
         lam = args.lam
         if args.imb_type == 'exp':
@@ -461,7 +461,7 @@ class Data():
         y = y[usersorted_id]
         p = 0
         for n, score in enumerate(y):
-            while p!=5 and points[p] < score:
+            while p != 5 and points[p] < score:
                 p += 1
             count[p] += 1
             area_sum[p] += score
@@ -469,8 +469,6 @@ class Data():
 
         for i in range(len(count)):
             userrate.append(1.0*count[i]/self.n_users)
-                
-
 
         return sorted_id, belong, rate, usersorted_id, userbelong, userrate
     
@@ -492,6 +490,7 @@ class Data():
 
         def func(x, lam):
             return N_max*((N_min/N_max)**(lam*x))
+
         popt, pcov = curve_fit(func, x, y)
         y_hat = [func(i, popt[0]) for i in x]
         plt.plot(x, y_hat, 'r--')
@@ -535,9 +534,6 @@ class Data():
         for item, users in self.train_item_list.items():
             sum += len(users)
         print("sparsity:", 1.0*sum/self.n_items/self.n_users)
-
-        
-        
 
 
     def sample(self):
