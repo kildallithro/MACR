@@ -240,7 +240,7 @@ def test(sess, model, test_users, batch_test_flag = False, model_type = 'o', val
             elif model_type == 'rubi_c':
                 rate_batch = sess.run(model.rubi_ratings, {model.users: user_batch,
                                                                 model.pos_items: item_batch})
-            elif model_type=="direct_minus_c":
+            elif model_type == "direct_minus_c":
                 rate_batch = sess.run(model.direct_minus_ratings, {model.users: user_batch,
                                                                 model.pos_items: item_batch})
             elif model_type == 'rubi_user_c':
@@ -277,7 +277,7 @@ def test(sess, model, test_users, batch_test_flag = False, model_type = 'o', val
                     item_acc_list[i] += 1/len(data.test_item_list[i])
 
         user_batch_rating_uid = zip(rate_batch, user_batch)
-        if valid_set=="test":
+        if valid_set == "test":
             batch_result = pool.map(test_one_user, user_batch_rating_uid)
         else:
             batch_result = pool.map(valid_one_user, user_batch_rating_uid)
