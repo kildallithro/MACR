@@ -17,7 +17,6 @@ logging.getLogger().setLevel(logging.INFO)
 cores = multiprocessing.cpu_count() // 2
 
 
-
 def compute_2i_regularization_id(items, n_items):
     reg_ids = []
     for x in items:
@@ -86,6 +85,7 @@ def hit_at_k(r, k):
     else:
         return 0.
 
+
 def ranklist_by_sorted(user_pos_test, test_items, rating, Ks):
     item_score = dict()
     for i in test_items:
@@ -103,18 +103,20 @@ def ranklist_by_sorted(user_pos_test, test_items, rating, Ks):
     
     return r
 
+
 def get_performance(user_pos_test, r, Ks):
     precision, recall, ndcg, hit_ratio = [], [], [], []
 
     for K in Ks:
-        precision.append(precision_at_k(r, K))#P = TP/ (TP+FP)
-        recall.append(recall_at_k(r, K, len(user_pos_test)))#R = TP/ (TP+FN)
+        precision.append(precision_at_k(r, K))  # P = TP/ (TP+FP)
+        recall.append(recall_at_k(r, K, len(user_pos_test)))  # R = TP/ (TP+FN)
         ndcg.append(ndcg_at_k(r, K, len(user_pos_test)))
-        hit_ratio.append(hit_at_k(r, K))#HR = SIGMA(TP) / SIGMA(test_set)
+        hit_ratio.append(hit_at_k(r, K))  # HR = SIGMA(TP) / SIGMA(test_set)
     # print(hit_ratio)
 
     return {'recall': np.array(recall), 'precision': np.array(precision),
             'ndcg': np.array(ndcg), 'hit_ratio': np.array(hit_ratio)}
+
 
 def test_one_user(x):
     # user u's ratings for user u
@@ -154,7 +156,7 @@ def valid_one_user(x):
     all_items = set(range(ITEM_NUM))
     valid_items = list(all_items - set(training_items))
 
-	#r为预测命中与否的集合，0未命中，1命中
+	# r为预测命中与否的集合，0未命中，1命中
     r = ranklist_by_sorted(user_pos_valid, valid_items, rating, Ks)
 
     return get_performance(user_pos_valid, r, Ks)
@@ -174,7 +176,6 @@ def test(sess, model, test_users, batch_test_flag = False, model_type = 'o', val
     n_user_batchs = n_test_users // u_batch_size + 1
 
     count = 0
-
 
     total_rate = np.empty(shape=[0, ITEM_NUM])
     for u_batch_id in range(n_user_batchs):
@@ -223,14 +224,14 @@ def test(sess, model, test_users, batch_test_flag = False, model_type = 'o', val
             item_batch = list(range(ITEM_NUM))
             if model_type == 'o':
                 rate_batch = sess.run(model.batch_ratings, {model.users: user_batch,
-                                                                model.pos_items: item_batch})
+                                                            model.pos_items: item_batch})
                 total_rate = np.vstack((total_rate, rate_batch))
             elif model_type == 'c':
                 rate_batch = sess.run(model.user_const_ratings, {model.users: user_batch,
-                                                                model.pos_items: item_batch})
+                                                                 model.pos_items: item_batch})
             elif model_type == 'ic':
                 rate_batch = sess.run(model.item_const_ratings, {model.users: user_batch,
-                                                                model.pos_items: item_batch})
+                                                                 model.pos_items: item_batch})
             elif model_type == 'rc':
                 rate_batch = sess.run(model.user_rand_ratings, {model.users: user_batch,
                                                                 model.pos_items: item_batch})
@@ -239,19 +240,19 @@ def test(sess, model, test_users, batch_test_flag = False, model_type = 'o', val
                                                                 model.pos_items: item_batch})
             elif model_type == 'rubi_c':
                 rate_batch = sess.run(model.rubi_ratings, {model.users: user_batch,
-                                                                model.pos_items: item_batch})
+                                                           model.pos_items: item_batch})
             elif model_type == "direct_minus_c":
                 rate_batch = sess.run(model.direct_minus_ratings, {model.users: user_batch,
-                                                                model.pos_items: item_batch})
+                                                                   model.pos_items: item_batch})
             elif model_type == 'rubi_user_c':
                 rate_batch = sess.run(model.rubi_ratings_userc, {model.users: user_batch,
-                                                                model.pos_items: item_batch})
+                                                                 model.pos_items: item_batch})
             elif model_type == 'rubi_both':
                 rate_batch = sess.run(model.rubi_ratings_both, {model.users: user_batch,
                                                                 model.pos_items: item_batch})
             elif model_type == "item_pop_test":
                 rate_batch = sess.run(model.rubi_ratings_both_poptest, {model.users: user_batch,
-                                                                model.pos_items: item_batch})
+                                                                        model.pos_items: item_batch})
                 # rate_batch = (rate_batch-np.min(rate_batch))*np.power(item_pop_test, pop_exp)
                 rate_batch = np.ones_like(rate_batch)*np.power(item_pop_test, pop_exp)
             else:
@@ -259,11 +260,11 @@ def test(sess, model, test_users, batch_test_flag = False, model_type = 'o', val
                 exit()
         
         item_acc_list = {}
-        rate_batch = np.array(rate_batch)# (B, N)
+        rate_batch = np.array(rate_batch)  # (B, N)
         for i in range(ITEM_NUM):
             item_acc_list[i] = 0
         all_items = set(range(ITEM_NUM))
-        for j,rate_user in enumerate(rate_batch):
+        for j, rate_user in enumerate(rate_batch):
             user = user_batch[j]
             user_pos_test = data.test_user_list[user]
             train_items = data.train_user_list[user]
@@ -328,6 +329,116 @@ def early_stop(hr, ndcg, recall, precision, cur_epoch, config, stopping_step, fl
         should_stop = False
 
     return config, stopping_step, should_stop
+
+
+def submit(sess, model, submit_users, batch_test_flag = False, model_type = 'o', item_pop_test=None, pop_exp = 0):
+
+    u_batch_size = BATCH_SIZE
+    i_batch_size = BATCH_SIZE
+
+    n_submit_users = len(submit_users)
+    n_user_batchs = n_submit_users // u_batch_size + 1
+
+    total_rate = np.empty(shape=[0, ITEM_NUM])
+    for u_batch_id in range(n_user_batchs):
+
+        start = u_batch_id * u_batch_size
+        end = (u_batch_id + 1) * u_batch_size
+
+        user_batch = submit_users[start: end]
+
+        if batch_test_flag:
+
+            n_item_batchs = ITEM_NUM // i_batch_size + 1
+            rate_batch = np.zeros(shape=(len(user_batch), ITEM_NUM))
+
+            i_count = 0
+            for i_batch_id in range(n_item_batchs):
+                i_start = i_batch_id * i_batch_size
+                i_end = min((i_batch_id + 1) * i_batch_size, ITEM_NUM)
+
+                item_batch = range(i_start, i_end)
+                if model_type == 'o':
+                    i_rate_batch = sess.run(model.batch_ratings, {model.users: user_batch,
+                                                                  model.pos_items: item_batch})
+                elif model_type == 'c':
+                    i_rate_batch = sess.run(model.user_const_ratings, {model.users: user_batch,
+                                                                       model.pos_items: item_batch})
+                elif model_type == 'ic':
+                    i_rate_batch = sess.run(model.item_const_ratings, {model.users: user_batch,
+                                                                       model.pos_items: item_batch})
+                elif model_type == 'rc':
+                    i_rate_batch = sess.run(model.user_rand_ratings, {model.users: user_batch,
+                                                                      model.pos_items: item_batch})
+                elif model_type == 'irc':
+                    i_rate_batch = sess.run(model.item_rand_ratings, {model.users: user_batch,
+                                                                      model.pos_items: item_batch})
+                else:
+                    print('model type error.')
+                    exit()
+
+                rate_batch[:, i_start: i_end] = i_rate_batch
+                i_count += i_rate_batch.shape[1]
+
+            assert i_count == ITEM_NUM
+
+        else:
+            item_batch = list(range(ITEM_NUM))
+            if model_type == 'o':
+                rate_batch = sess.run(model.batch_ratings, {model.users: user_batch,
+                                                            model.pos_items: item_batch})
+                total_rate = np.vstack((total_rate, rate_batch))
+            elif model_type == 'c':
+                rate_batch = sess.run(model.user_const_ratings, {model.users: user_batch,
+                                                                 model.pos_items: item_batch})
+            elif model_type == 'ic':
+                rate_batch = sess.run(model.item_const_ratings, {model.users: user_batch,
+                                                                 model.pos_items: item_batch})
+            elif model_type == 'rc':
+                rate_batch = sess.run(model.user_rand_ratings, {model.users: user_batch,
+                                                                model.pos_items: item_batch})
+            elif model_type == 'irc':
+                rate_batch = sess.run(model.item_rand_ratings, {model.users: user_batch,
+                                                                model.pos_items: item_batch})
+            elif model_type == 'rubi_c':
+                rate_batch = sess.run(model.rubi_ratings, {model.users: user_batch,
+                                                           model.pos_items: item_batch})
+            elif model_type == "direct_minus_c":
+                rate_batch = sess.run(model.direct_minus_ratings, {model.users: user_batch,
+                                                                   model.pos_items: item_batch})
+            elif model_type == 'rubi_user_c':
+                rate_batch = sess.run(model.rubi_ratings_userc, {model.users: user_batch,
+                                                                 model.pos_items: item_batch})
+            elif model_type == 'rubi_both':
+                rate_batch = sess.run(model.rubi_ratings_both, {model.users: user_batch,
+                                                                model.pos_items: item_batch})
+            elif model_type == "item_pop_test":
+                rate_batch = sess.run(model.rubi_ratings_both_poptest, {model.users: user_batch,
+                                                                        model.pos_items: item_batch})
+                # rate_batch = (rate_batch-np.min(rate_batch))*np.power(item_pop_test, pop_exp)
+                rate_batch = np.ones_like(rate_batch) * np.power(item_pop_test, pop_exp)
+            else:
+                print('model type error.')
+                exit()
+
+        item_acc_list = {}
+        rate_batch = np.array(rate_batch)  # (B, N)
+        for i in range(ITEM_NUM):
+            item_acc_list[i] = 0
+        all_items = set(range(ITEM_NUM))
+        for j, rate_user in enumerate(rate_batch):
+            user = user_batch[j]
+            test_items = data.test_user_list[user]
+            train_items = data.train_user_list[user]
+            submit_items = list(all_items - set(train_items) - set(test_items))
+            item_score = dict()
+            for i in submit_items:
+                item_score[i] = rate_user[i]
+            K_max_item_score = heapq.nlargest(5, item_score, key=item_score.get)
+
+    print('i am submit.')
+
+
 
 if __name__ == '__main__':
     seed = 12345
@@ -510,15 +621,15 @@ if __name__ == '__main__':
                     continue
 
                 t2 = time()
-                if args.valid_set=="test":
+                if args.valid_set == "test":
                     users_to_test = list(data.test_user_list.keys())
-                elif args.valid_set=="valid":
+                elif args.valid_set == "valid":
                     users_to_test = list(data.valid_user_list.keys())
                 # start testing
-                if args.test=="normal" or args.test == 'rubi_user_wise':
-                    if args.valid_set=="test":
+                if args.test == "normal" or args.test == 'rubi_user_wise':
+                    if args.valid_set == "test":
                         ret = test(sess, model, users_to_test, valid_set="test")
-                    elif args.valid_set=="valid":
+                    elif args.valid_set == "valid":
                         ret = test(sess, model, users_to_test, valid_set="valid")
                     # ret = test(sess, model, users_to_test)
                     t3 = time()
@@ -602,6 +713,13 @@ if __name__ == '__main__':
                             print(config['best_c'], file = f)
 
                     break
+
+            # submit
+            data_path = '../data/{}/submit.csv'.format(args.dataset)
+            users_to_sample = np.loadtxt(data_path, dtype=int, skiprows=1, delimiter=',')
+            submit(sess, model, users_to_sample[:, 0])
+
+
         # pretrain
         else:
             print('#load existing models.')

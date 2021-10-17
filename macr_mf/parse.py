@@ -4,7 +4,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Run pop_bias.")
     parser.add_argument('--data_path', nargs='?', default='./data/',
                         help='Input data path.')
-    parser.add_argument('--dataset', nargs='?', default='tianchi',
+    parser.add_argument('--dataset', nargs='?', default='tianchi_df',
                         help='Choose a dataset')   # movielens_ml_1m
     parser.add_argument('--source', nargs='?', default='normal',
     help='normal | dice')
@@ -22,7 +22,7 @@ def parse_args():
                         help='alpha')
     parser.add_argument('--verbose', type=int, default=1,
                         help='Interval of evaluation.')
-    parser.add_argument('--epoch', type=int, default=1000,
+    parser.add_argument('--epoch', type=int, default=10,
                         help='Number of epoch.')
     parser.add_argument('--embed_size', type=int, default=64,
                         help='Embedding size.')
