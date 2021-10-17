@@ -1,0 +1,507 @@
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:27: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+WARNING:tensorflow:
+The TensorFlow contrib module will not be included in TensorFlow 2.0.
+For more information, please see:
+  * https://github.com/tensorflow/community/blob/master/rfcs/20180907-contrib-sunset.md
+  * https://github.com/tensorflow/addons
+  * https://github.com/tensorflow/io (for I/O related ops)
+If you depend on functionality not listed there, please file an issue.
+
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:111: The name tf.variable_scope is deprecated. Please use tf.compat.v1.variable_scope instead.
+
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:271: The name tf.log is deprecated. Please use tf.math.log instead.
+
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:56: The name tf.get_collection is deprecated. Please use tf.compat.v1.get_collection instead.
+
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:57: The name tf.train.AdamOptimizer is deprecated. Please use tf.compat.v1.train.AdamOptimizer instead.
+
+WARNING:tensorflow:From E:/PycharmProjects/MACR/macr_mf/train.py:376: The name tf.train.Saver is deprecated. Please use tf.compat.v1.train.Saver instead.
+
+INFO:root:Epoch 0 [0.7s]: train==[1.38482=1.38482 + 0.00000]
+INFO:root:Epoch 1 [0.4s]: train==[1.37695=1.37695 + 0.00000]
+INFO:root:Epoch 2 [0.4s]: train==[1.35318=1.35318 + 0.00000]
+INFO:root:Epoch 3 [0.4s]: train==[1.30784=1.30784 + 0.00000]
+INFO:root:Epoch 4 [0.4s]: train==[1.24690=1.24689 + 0.00001]
+INFO:root:Epoch 5 [0.4s]: train==[1.18240=1.18239 + 0.00001]
+INFO:root:Epoch 6 [0.4s]: train==[1.12147=1.12145 + 0.00002]
+INFO:root:Epoch 7 [0.4s]: train==[1.06381=1.06379 + 0.00003]
+INFO:root:Epoch 8 [0.4s]: train==[1.01385=1.01382 + 0.00003]
+INFO:root:Epoch 9 [0.4s + 14.7s]: train==[0.96952474=0.96948816 + 0.00003658], recall=[0.17290, 0.17290], precision=[0.01786, 0.01786], hit=[0.29306, 0.29306], ndcg=[0.09431, 0.09431]
+INFO:root:Epoch 10 [0.4s]: train==[0.92927=0.92923 + 0.00004]
+INFO:root:Epoch 11 [0.4s]: train==[0.89220=0.89215 + 0.00005]
+INFO:root:Epoch 12 [0.4s]: train==[0.86034=0.86029 + 0.00005]
+INFO:root:Epoch 13 [0.4s]: train==[0.82780=0.82775 + 0.00006]
+INFO:root:Epoch 14 [0.4s]: train==[0.79466=0.79460 + 0.00006]
+INFO:root:Epoch 15 [0.4s]: train==[0.76451=0.76445 + 0.00006]
+INFO:root:Epoch 16 [0.4s]: train==[0.73555=0.73548 + 0.00007]
+INFO:root:Epoch 17 [0.4s]: train==[0.70570=0.70563 + 0.00007]
+INFO:root:Epoch 18 [0.4s]: train==[0.67676=0.67669 + 0.00007]
+INFO:root:Epoch 19 [0.4s + 14.4s]: train==[0.64747980=0.64740253 + 0.00007726], recall=[0.20167, 0.20167], precision=[0.02124, 0.02124], hit=[0.33348, 0.33348], ndcg=[0.10759, 0.10759]
+INFO:root:Epoch 20 [0.4s]: train==[0.61856=0.61848 + 0.00008]
+INFO:root:Epoch 21 [0.4s]: train==[0.59446=0.59438 + 0.00008]
+INFO:root:Epoch 22 [0.4s]: train==[0.56603=0.56594 + 0.00009]
+INFO:root:Epoch 23 [0.4s]: train==[0.53862=0.53853 + 0.00009]
+INFO:root:Epoch 24 [0.4s]: train==[0.51634=0.51625 + 0.00009]
+INFO:root:Epoch 25 [0.4s]: train==[0.49331=0.49322 + 0.00009]
+INFO:root:Epoch 26 [0.4s]: train==[0.47438=0.47428 + 0.00010]
+INFO:root:Epoch 27 [0.4s]: train==[0.45539=0.45529 + 0.00010]
+INFO:root:Epoch 28 [0.4s]: train==[0.43778=0.43768 + 0.00010]
+INFO:root:Epoch 29 [0.4s + 14.5s]: train==[0.42073786=0.42063677 + 0.00010108], recall=[0.20514, 0.20514], precision=[0.02189, 0.02189], hit=[0.33831, 0.33831], ndcg=[0.11021, 0.11021]
+INFO:root:Epoch 30 [0.4s]: train==[0.40346=0.40335 + 0.00010]
+INFO:root:Epoch 31 [0.4s]: train==[0.38785=0.38775 + 0.00011]
+INFO:root:Epoch 32 [0.4s]: train==[0.37338=0.37327 + 0.00011]
+INFO:root:Epoch 33 [0.4s]: train==[0.35984=0.35973 + 0.00011]
+INFO:root:Epoch 34 [0.4s]: train==[0.35049=0.35038 + 0.00011]
+INFO:root:Epoch 35 [0.5s]: train==[0.33694=0.33683 + 0.00011]
+INFO:root:Epoch 36 [0.7s]: train==[0.32694=0.32682 + 0.00012]
+INFO:root:Epoch 37 [0.7s]: train==[0.31321=0.31309 + 0.00012]
+INFO:root:Epoch 38 [0.4s]: train==[0.30782=0.30770 + 0.00012]
+INFO:root:Epoch 39 [0.4s + 14.7s]: train==[0.29441608=0.29429445 + 0.00012163], recall=[0.21421, 0.21421], precision=[0.02290, 0.02290], hit=[0.35279, 0.35279], ndcg=[0.11434, 0.11434]
+INFO:root:Epoch 40 [0.7s]: train==[0.28632=0.28619 + 0.00012]
+INFO:root:Epoch 41 [0.6s]: train==[0.27728=0.27716 + 0.00013]
+INFO:root:Epoch 42 [0.6s]: train==[0.27233=0.27220 + 0.00013]
+INFO:root:Epoch 43 [0.8s]: train==[0.26181=0.26168 + 0.00013]
+INFO:root:Epoch 44 [0.5s]: train==[0.25774=0.25761 + 0.00013]
+INFO:root:Epoch 45 [0.7s]: train==[0.25161=0.25148 + 0.00013]
+INFO:root:Epoch 46 [0.6s]: train==[0.24093=0.24079 + 0.00014]
+INFO:root:Epoch 47 [0.6s]: train==[0.23671=0.23657 + 0.00014]
+INFO:root:Epoch 48 [0.5s]: train==[0.23000=0.22986 + 0.00014]
+INFO:root:Epoch 49 [0.4s + 21.2s]: train==[0.22237733=0.22223598 + 0.00014136], recall=[0.21655, 0.21655], precision=[0.02283, 0.02283], hit=[0.35475, 0.35475], ndcg=[0.11536, 0.11536]
+INFO:root:Epoch 50 [0.5s]: train==[0.21558=0.21543 + 0.00014]
+INFO:root:Epoch 51 [0.5s]: train==[0.21438=0.21424 + 0.00015]
+INFO:root:Epoch 52 [0.5s]: train==[0.20774=0.20760 + 0.00015]
+INFO:root:Epoch 53 [0.5s]: train==[0.20122=0.20108 + 0.00015]
+INFO:root:Epoch 54 [0.5s]: train==[0.19383=0.19368 + 0.00015]
+INFO:root:Epoch 55 [0.6s]: train==[0.19237=0.19222 + 0.00015]
+INFO:root:Epoch 56 [0.5s]: train==[0.18754=0.18739 + 0.00016]
+INFO:root:Epoch 57 [0.5s]: train==[0.18043=0.18027 + 0.00016]
+INFO:root:Epoch 58 [0.5s]: train==[0.17880=0.17864 + 0.00016]
+INFO:root:Epoch 59 [0.4s + 21.4s]: train==[0.17398923=0.17382803 + 0.00016120], recall=[0.22105, 0.22105], precision=[0.02305, 0.02305], hit=[0.36003, 0.36003], ndcg=[0.11760, 0.11760]
+INFO:root:Epoch 60 [0.4s]: train==[0.17114=0.17097 + 0.00016]
+INFO:root:Epoch 61 [0.4s]: train==[0.16792=0.16776 + 0.00016]
+INFO:root:Epoch 62 [0.4s]: train==[0.16282=0.16265 + 0.00017]
+INFO:root:Epoch 63 [0.4s]: train==[0.16011=0.15994 + 0.00017]
+INFO:root:Epoch 64 [0.4s]: train==[0.15490=0.15473 + 0.00017]
+INFO:root:Epoch 65 [0.4s]: train==[0.15180=0.15163 + 0.00017]
+INFO:root:Epoch 66 [0.4s]: train==[0.14971=0.14954 + 0.00017]
+INFO:root:Epoch 67 [0.4s]: train==[0.14455=0.14438 + 0.00018]
+INFO:root:Epoch 68 [0.4s]: train==[0.14355=0.14337 + 0.00018]
+INFO:root:Epoch 69 [0.4s + 14.9s]: train==[0.14118135=0.14100092 + 0.00018043], recall=[0.22049, 0.22049], precision=[0.02290, 0.02290], hit=[0.35913, 0.35913], ndcg=[0.11854, 0.11854]
+INFO:root:Epoch 70 [0.4s]: train==[0.13366=0.13348 + 0.00018]
+INFO:root:Epoch 71 [0.4s]: train==[0.13232=0.13214 + 0.00019]
+INFO:root:Epoch 72 [0.4s]: train==[0.13305=0.13286 + 0.00019]
+INFO:root:Epoch 73 [0.4s]: train==[0.13065=0.13046 + 0.00019]
+INFO:root:Epoch 74 [0.4s]: train==[0.12483=0.12464 + 0.00019]
+INFO:root:Epoch 75 [0.4s]: train==[0.12294=0.12275 + 0.00019]
+INFO:root:Epoch 76 [0.4s]: train==[0.12088=0.12068 + 0.00019]
+INFO:root:Epoch 77 [0.4s]: train==[0.11898=0.11878 + 0.00020]
+INFO:root:Epoch 78 [0.4s]: train==[0.11291=0.11271 + 0.00020]
+INFO:root:Epoch 79 [0.4s + 14.4s]: train==[0.11119671=0.11099714 + 0.00019958], recall=[0.22456, 0.22456], precision=[0.02305, 0.02305], hit=[0.36305, 0.36305], ndcg=[0.12116, 0.12116]
+INFO:root:Epoch 80 [0.4s]: train==[0.11108=0.11088 + 0.00020]
+INFO:root:Epoch 81 [0.4s]: train==[0.10777=0.10757 + 0.00020]
+INFO:root:Epoch 82 [0.4s]: train==[0.10713=0.10692 + 0.00021]
+INFO:root:Epoch 83 [0.4s]: train==[0.10520=0.10500 + 0.00021]
+INFO:root:Epoch 84 [0.4s]: train==[0.10138=0.10117 + 0.00021]
+INFO:root:Epoch 85 [0.4s]: train==[0.10076=0.10055 + 0.00021]
+INFO:root:Epoch 86 [0.4s]: train==[0.09948=0.09927 + 0.00021]
+INFO:root:Epoch 87 [0.4s]: train==[0.09620=0.09598 + 0.00021]
+INFO:root:Epoch 88 [0.4s]: train==[0.09554=0.09533 + 0.00022]
+INFO:root:Epoch 89 [0.4s + 14.4s]: train==[0.09182816=0.09160983 + 0.00021833], recall=[0.22764, 0.22764], precision=[0.02303, 0.02303], hit=[0.36501, 0.36501], ndcg=[0.12255, 0.12255]
+INFO:root:Epoch 90 [0.4s]: train==[0.09006=0.08984 + 0.00022]
+INFO:root:Epoch 91 [0.4s]: train==[0.08713=0.08690 + 0.00022]
+INFO:root:Epoch 92 [0.4s]: train==[0.08829=0.08807 + 0.00022]
+INFO:root:Epoch 93 [0.4s]: train==[0.08515=0.08493 + 0.00023]
+INFO:root:Epoch 94 [0.4s]: train==[0.08441=0.08418 + 0.00023]
+INFO:root:Epoch 95 [0.4s]: train==[0.08288=0.08265 + 0.00023]
+INFO:root:Epoch 96 [0.4s]: train==[0.08220=0.08197 + 0.00023]
+INFO:root:Epoch 97 [0.4s]: train==[0.08063=0.08039 + 0.00023]
+INFO:root:Epoch 98 [0.4s]: train==[0.08085=0.08062 + 0.00023]
+INFO:root:Epoch 99 [0.4s + 14.6s]: train==[0.07845569=0.07821920 + 0.00023649], recall=[0.23024, 0.23024], precision=[0.02322, 0.02322], hit=[0.36893, 0.36893], ndcg=[0.12434, 0.12434]
+INFO:root:Epoch 100 [0.4s]: train==[0.07481=0.07457 + 0.00024]
+INFO:root:Epoch 101 [0.4s]: train==[0.07379=0.07355 + 0.00024]
+INFO:root:Epoch 102 [0.4s]: train==[0.07348=0.07324 + 0.00024]
+INFO:root:Epoch 103 [0.4s]: train==[0.07360=0.07336 + 0.00024]
+INFO:root:Epoch 104 [0.4s]: train==[0.07024=0.07000 + 0.00024]
+INFO:root:Epoch 105 [0.4s]: train==[0.07051=0.07026 + 0.00025]
+INFO:root:Epoch 106 [0.4s]: train==[0.06875=0.06850 + 0.00025]
+INFO:root:Epoch 107 [0.4s]: train==[0.06903=0.06878 + 0.00025]
+INFO:root:Epoch 108 [0.4s]: train==[0.06626=0.06601 + 0.00025]
+INFO:root:Epoch 109 [0.5s + 14.5s]: train==[0.06626742=0.06601370 + 0.00025372], recall=[0.23185, 0.23185], precision=[0.02327, 0.02327], hit=[0.36908, 0.36908], ndcg=[0.12568, 0.12568]
+INFO:root:Epoch 110 [0.4s]: train==[0.06512=0.06487 + 0.00026]
+INFO:root:Epoch 111 [0.4s]: train==[0.06144=0.06118 + 0.00026]
+INFO:root:Epoch 112 [0.4s]: train==[0.06228=0.06202 + 0.00026]
+INFO:root:Epoch 113 [0.4s]: train==[0.06122=0.06096 + 0.00026]
+INFO:root:Epoch 114 [0.4s]: train==[0.05977=0.05950 + 0.00026]
+INFO:root:Epoch 115 [0.4s]: train==[0.06057=0.06031 + 0.00026]
+INFO:root:Epoch 116 [0.4s]: train==[0.05947=0.05920 + 0.00027]
+INFO:root:Epoch 117 [0.4s]: train==[0.05750=0.05724 + 0.00027]
+INFO:root:Epoch 118 [0.4s]: train==[0.05709=0.05682 + 0.00027]
+INFO:root:Epoch 119 [0.4s + 14.3s]: train==[0.05560313=0.05533315 + 0.00026998], recall=[0.23375, 0.23375], precision=[0.02330, 0.02330], hit=[0.37134, 0.37134], ndcg=[0.12676, 0.12676]
+INFO:root:Epoch 120 [0.4s]: train==[0.05501=0.05473 + 0.00027]
+INFO:root:Epoch 121 [0.4s]: train==[0.05540=0.05512 + 0.00027]
+INFO:root:Epoch 122 [0.4s]: train==[0.05357=0.05330 + 0.00027]
+INFO:root:Epoch 123 [0.4s]: train==[0.05372=0.05345 + 0.00028]
+INFO:root:Epoch 124 [0.4s]: train==[0.05243=0.05215 + 0.00028]
+INFO:root:Epoch 125 [0.4s]: train==[0.05372=0.05344 + 0.00028]
+INFO:root:Epoch 126 [0.4s]: train==[0.05176=0.05148 + 0.00028]
+INFO:root:Epoch 127 [0.4s]: train==[0.05033=0.05004 + 0.00028]
+INFO:root:Epoch 128 [0.4s]: train==[0.04896=0.04867 + 0.00028]
+INFO:root:Epoch 129 [0.4s + 14.3s]: train==[0.04856479=0.04827913 + 0.00028566], recall=[0.23677, 0.23677], precision=[0.02344, 0.02344], hit=[0.37360, 0.37360], ndcg=[0.12882, 0.12882]
+INFO:root:Epoch 130 [0.4s]: train==[0.04808=0.04779 + 0.00029]
+INFO:root:Epoch 131 [0.4s]: train==[0.04740=0.04711 + 0.00029]
+INFO:root:Epoch 132 [0.4s]: train==[0.04688=0.04659 + 0.00029]
+INFO:root:Epoch 133 [0.4s]: train==[0.04639=0.04609 + 0.00029]
+INFO:root:Epoch 134 [0.4s]: train==[0.04454=0.04425 + 0.00029]
+INFO:root:Epoch 135 [0.4s]: train==[0.04517=0.04487 + 0.00030]
+INFO:root:Epoch 136 [0.4s]: train==[0.04507=0.04477 + 0.00030]
+INFO:root:Epoch 137 [0.4s]: train==[0.04343=0.04313 + 0.00030]
+INFO:root:Epoch 138 [0.4s]: train==[0.04240=0.04210 + 0.00030]
+INFO:root:Epoch 139 [0.4s + 14.3s]: train==[0.04265543=0.04235392 + 0.00030152], recall=[0.23813, 0.23813], precision=[0.02357, 0.02357], hit=[0.37511, 0.37511], ndcg=[0.13027, 0.13027]
+INFO:root:Epoch 140 [0.4s]: train==[0.04232=0.04202 + 0.00030]
+INFO:root:Epoch 141 [0.4s]: train==[0.04212=0.04182 + 0.00030]
+INFO:root:Epoch 142 [0.4s]: train==[0.04145=0.04115 + 0.00031]
+INFO:root:Epoch 143 [0.4s]: train==[0.03971=0.03940 + 0.00031]
+INFO:root:Epoch 144 [0.4s]: train==[0.04072=0.04041 + 0.00031]
+INFO:root:Epoch 145 [0.4s]: train==[0.04035=0.04004 + 0.00031]
+INFO:root:Epoch 146 [0.4s]: train==[0.03979=0.03948 + 0.00031]
+INFO:root:Epoch 147 [0.4s]: train==[0.03988=0.03957 + 0.00031]
+INFO:root:Epoch 148 [0.4s]: train==[0.03790=0.03758 + 0.00031]
+INFO:root:Epoch 149 [0.4s + 14.3s]: train==[0.03656185=0.03624529 + 0.00031655], recall=[0.23966, 0.23966], precision=[0.02358, 0.02358], hit=[0.37707, 0.37707], ndcg=[0.13115, 0.13115]
+INFO:root:Epoch 150 [0.4s]: train==[0.03777=0.03746 + 0.00032]
+INFO:root:Epoch 151 [0.4s]: train==[0.03682=0.03650 + 0.00032]
+INFO:root:Epoch 152 [0.4s]: train==[0.03604=0.03571 + 0.00032]
+INFO:root:Epoch 153 [0.4s]: train==[0.03581=0.03549 + 0.00032]
+INFO:root:Epoch 154 [0.4s]: train==[0.03578=0.03545 + 0.00032]
+INFO:root:Epoch 155 [0.4s]: train==[0.03547=0.03515 + 0.00032]
+INFO:root:Epoch 156 [0.4s]: train==[0.03509=0.03476 + 0.00033]
+INFO:root:Epoch 157 [0.4s]: train==[0.03386=0.03353 + 0.00033]
+INFO:root:Epoch 158 [0.4s]: train==[0.03436=0.03403 + 0.00033]
+INFO:root:Epoch 159 [0.4s + 14.3s]: train==[0.03317769=0.03284689 + 0.00033079], recall=[0.23975, 0.23975], precision=[0.02344, 0.02344], hit=[0.37692, 0.37692], ndcg=[0.13218, 0.13218]
+INFO:root:Epoch 160 [0.4s]: train==[0.03210=0.03177 + 0.00033]
+INFO:root:Epoch 161 [0.4s]: train==[0.03269=0.03235 + 0.00033]
+INFO:root:Epoch 162 [0.4s]: train==[0.03263=0.03229 + 0.00034]
+INFO:root:Epoch 163 [0.4s]: train==[0.03167=0.03133 + 0.00034]
+INFO:root:Epoch 164 [0.4s]: train==[0.03081=0.03047 + 0.00034]
+INFO:root:Epoch 165 [0.4s]: train==[0.03205=0.03171 + 0.00034]
+INFO:root:Epoch 166 [0.4s]: train==[0.03085=0.03051 + 0.00034]
+INFO:root:Epoch 167 [0.4s]: train==[0.03078=0.03044 + 0.00034]
+INFO:root:Epoch 168 [0.4s]: train==[0.02990=0.02956 + 0.00034]
+INFO:root:Epoch 169 [0.4s + 14.3s]: train==[0.02859581=0.02825137 + 0.00034444], recall=[0.23873, 0.23873], precision=[0.02346, 0.02346], hit=[0.37813, 0.37813], ndcg=[0.13243, 0.13243]
+INFO:root:Epoch 170 [0.4s]: train==[0.02882=0.02847 + 0.00035]
+INFO:root:Epoch 171 [0.4s]: train==[0.02915=0.02881 + 0.00035]
+INFO:root:Epoch 172 [0.4s]: train==[0.02892=0.02857 + 0.00035]
+INFO:root:Epoch 173 [0.4s]: train==[0.02910=0.02875 + 0.00035]
+INFO:root:Epoch 174 [0.4s]: train==[0.02755=0.02720 + 0.00035]
+INFO:root:Epoch 175 [0.4s]: train==[0.02726=0.02691 + 0.00035]
+INFO:root:Epoch 176 [0.4s]: train==[0.02714=0.02678 + 0.00035]
+INFO:root:Epoch 177 [0.4s]: train==[0.02687=0.02652 + 0.00036]
+INFO:root:Epoch 178 [0.4s]: train==[0.02663=0.02628 + 0.00036]
+INFO:root:Epoch 179 [0.4s + 14.3s]: train==[0.02805681=0.02769891 + 0.00035791], recall=[0.24210, 0.24210], precision=[0.02373, 0.02373], hit=[0.38009, 0.38009], ndcg=[0.13389, 0.13389]
+INFO:root:Epoch 180 [0.4s]: train==[0.02622=0.02586 + 0.00036]
+INFO:root:Epoch 181 [0.4s]: train==[0.02585=0.02549 + 0.00036]
+INFO:root:Epoch 182 [0.4s]: train==[0.02692=0.02656 + 0.00036]
+INFO:root:Epoch 183 [0.4s]: train==[0.02511=0.02475 + 0.00036]
+INFO:root:Epoch 184 [0.4s]: train==[0.02629=0.02593 + 0.00036]
+INFO:root:Epoch 185 [0.4s]: train==[0.02581=0.02545 + 0.00037]
+INFO:root:Epoch 186 [0.4s]: train==[0.02503=0.02466 + 0.00037]
+INFO:root:Epoch 187 [0.4s]: train==[0.02531=0.02495 + 0.00037]
+INFO:root:Epoch 188 [0.4s]: train==[0.02512=0.02475 + 0.00037]
+INFO:root:Epoch 189 [0.4s + 14.2s]: train==[0.02621829=0.02584741 + 0.00037088], recall=[0.24075, 0.24075], precision=[0.02357, 0.02357], hit=[0.38024, 0.38024], ndcg=[0.13424, 0.13424]
+INFO:root:Epoch 190 [0.4s]: train==[0.02476=0.02439 + 0.00037]
+INFO:root:Epoch 191 [0.4s]: train==[0.02424=0.02387 + 0.00037]
+INFO:root:Epoch 192 [0.4s]: train==[0.02408=0.02370 + 0.00037]
+INFO:root:Epoch 193 [0.4s]: train==[0.02386=0.02349 + 0.00038]
+INFO:root:Epoch 194 [0.4s]: train==[0.02402=0.02364 + 0.00038]
+INFO:root:Epoch 195 [0.4s]: train==[0.02319=0.02281 + 0.00038]
+INFO:root:Epoch 196 [0.4s]: train==[0.02290=0.02252 + 0.00038]
+INFO:root:Epoch 197 [0.4s]: train==[0.02288=0.02250 + 0.00038]
+INFO:root:Epoch 198 [0.4s]: train==[0.02171=0.02132 + 0.00038]
+INFO:root:Epoch 199 [0.4s + 14.2s]: train==[0.02211408=0.02173077 + 0.00038331], recall=[0.23959, 0.23959], precision=[0.02343, 0.02343], hit=[0.37843, 0.37843], ndcg=[0.13376, 0.13376]
+INFO:root:Epoch 200 [0.4s]: train==[0.02114=0.02076 + 0.00038]
+INFO:root:Epoch 201 [0.4s]: train==[0.02130=0.02092 + 0.00039]
+INFO:root:Epoch 202 [0.4s]: train==[0.02080=0.02042 + 0.00039]
+INFO:root:Epoch 203 [0.4s]: train==[0.02153=0.02114 + 0.00039]
+INFO:root:Epoch 204 [0.4s]: train==[0.02147=0.02108 + 0.00039]
+INFO:root:Epoch 205 [0.4s]: train==[0.02171=0.02132 + 0.00039]
+INFO:root:Epoch 206 [0.4s]: train==[0.02126=0.02087 + 0.00039]
+INFO:root:Epoch 207 [0.4s]: train==[0.02063=0.02023 + 0.00039]
+INFO:root:Epoch 208 [0.4s]: train==[0.02046=0.02007 + 0.00039]
+INFO:root:Epoch 209 [0.4s + 14.3s]: train==[0.02008051=0.01968561 + 0.00039490], recall=[0.23886, 0.23886], precision=[0.02342, 0.02342], hit=[0.37662, 0.37662], ndcg=[0.13451, 0.13451]
+INFO:root:Epoch 210 [0.4s]: train==[0.01970=0.01930 + 0.00040]
+INFO:root:Epoch 211 [0.4s]: train==[0.02091=0.02051 + 0.00040]
+INFO:root:Epoch 212 [0.4s]: train==[0.02019=0.01979 + 0.00040]
+INFO:root:Epoch 213 [0.4s]: train==[0.02161=0.02121 + 0.00040]
+INFO:root:Epoch 214 [0.4s]: train==[0.02052=0.02012 + 0.00040]
+INFO:root:Epoch 215 [0.4s]: train==[0.01977=0.01937 + 0.00040]
+INFO:root:Epoch 216 [0.4s]: train==[0.01948=0.01908 + 0.00040]
+INFO:root:Epoch 217 [0.4s]: train==[0.01951=0.01911 + 0.00040]
+INFO:root:Epoch 218 [0.4s]: train==[0.02032=0.01991 + 0.00041]
+INFO:root:Epoch 219 [0.4s + 14.3s]: train==[0.01815129=0.01774468 + 0.00040662], recall=[0.24025, 0.24025], precision=[0.02338, 0.02338], hit=[0.37722, 0.37722], ndcg=[0.13455, 0.13455]
+INFO:root:Epoch 220 [0.4s]: train==[0.01901=0.01860 + 0.00041]
+INFO:root:Epoch 221 [0.4s]: train==[0.01927=0.01886 + 0.00041]
+INFO:root:Epoch 222 [0.4s]: train==[0.01801=0.01760 + 0.00041]
+INFO:root:Epoch 223 [0.4s]: train==[0.01853=0.01812 + 0.00041]
+INFO:root:Epoch 224 [0.4s]: train==[0.01887=0.01845 + 0.00041]
+INFO:root:Epoch 225 [0.4s]: train==[0.01892=0.01850 + 0.00041]
+INFO:root:Epoch 226 [0.4s]: train==[0.01846=0.01804 + 0.00042]
+INFO:root:Epoch 227 [0.4s]: train==[0.01755=0.01713 + 0.00042]
+INFO:root:Epoch 228 [0.4s]: train==[0.01735=0.01693 + 0.00042]
+INFO:root:Epoch 229 [0.4s + 14.3s]: train==[0.01780108=0.01738319 + 0.00041789], recall=[0.24089, 0.24089], precision=[0.02345, 0.02345], hit=[0.37813, 0.37813], ndcg=[0.13557, 0.13557]
+INFO:root:Epoch 230 [0.4s]: train==[0.01807=0.01765 + 0.00042]
+INFO:root:Epoch 231 [0.4s]: train==[0.01843=0.01801 + 0.00042]
+INFO:root:Epoch 232 [0.4s]: train==[0.01690=0.01648 + 0.00042]
+INFO:root:Epoch 233 [0.4s]: train==[0.01786=0.01744 + 0.00042]
+INFO:root:Epoch 234 [0.4s]: train==[0.01646=0.01604 + 0.00042]
+INFO:root:Epoch 235 [0.4s]: train==[0.01720=0.01677 + 0.00043]
+INFO:root:Epoch 236 [0.4s]: train==[0.01735=0.01692 + 0.00043]
+INFO:root:Epoch 237 [0.4s]: train==[0.01599=0.01557 + 0.00043]
+INFO:root:Epoch 238 [0.4s]: train==[0.01690=0.01647 + 0.00043]
+INFO:root:Epoch 239 [0.4s + 14.3s]: train==[0.01704319=0.01661367 + 0.00042951], recall=[0.24028, 0.24028], precision=[0.02331, 0.02331], hit=[0.37587, 0.37587], ndcg=[0.13651, 0.13651]
+INFO:root:Epoch 240 [0.4s]: train==[0.01584=0.01541 + 0.00043]
+INFO:root:Epoch 241 [0.4s]: train==[0.01556=0.01513 + 0.00043]
+INFO:root:Epoch 242 [0.4s]: train==[0.01656=0.01612 + 0.00043]
+INFO:root:Epoch 243 [0.4s]: train==[0.01597=0.01554 + 0.00043]
+INFO:root:Epoch 244 [0.4s]: train==[0.01439=0.01395 + 0.00043]
+INFO:root:Epoch 245 [0.4s]: train==[0.01646=0.01602 + 0.00044]
+INFO:root:Epoch 246 [0.4s]: train==[0.01552=0.01508 + 0.00044]
+INFO:root:Epoch 247 [0.4s]: train==[0.01558=0.01514 + 0.00044]
+INFO:root:Epoch 248 [0.4s]: train==[0.01588=0.01544 + 0.00044]
+INFO:root:Epoch 249 [0.4s + 14.2s]: train==[0.01464771=0.01420822 + 0.00043948], recall=[0.23874, 0.23874], precision=[0.02316, 0.02316], hit=[0.37345, 0.37345], ndcg=[0.13546, 0.13546]
+INFO:root:Epoch 250 [0.4s]: train==[0.01528=0.01484 + 0.00044]
+INFO:root:Epoch 251 [0.4s]: train==[0.01458=0.01414 + 0.00044]
+INFO:root:Epoch 252 [0.4s]: train==[0.01507=0.01462 + 0.00044]
+INFO:root:Epoch 253 [0.4s]: train==[0.01510=0.01466 + 0.00044]
+INFO:root:Epoch 254 [0.4s]: train==[0.01539=0.01495 + 0.00044]
+INFO:root:Epoch 255 [0.4s]: train==[0.01543=0.01498 + 0.00045]
+INFO:root:Epoch 256 [0.4s]: train==[0.01530=0.01486 + 0.00045]
+INFO:root:Epoch 257 [0.4s]: train==[0.01481=0.01436 + 0.00045]
+INFO:root:Epoch 258 [0.4s]: train==[0.01426=0.01381 + 0.00045]
+INFO:root:Epoch 259 [0.4s + 14.3s]: train==[0.01415537=0.01370541 + 0.00044997], recall=[0.23802, 0.23802], precision=[0.02306, 0.02306], hit=[0.37270, 0.37270], ndcg=[0.13479, 0.13479]
+INFO:root:Epoch 260 [0.4s]: train==[0.01486=0.01441 + 0.00045]
+INFO:root:Epoch 261 [0.4s]: train==[0.01428=0.01383 + 0.00045]
+INFO:root:Epoch 262 [0.4s]: train==[0.01376=0.01331 + 0.00045]
+INFO:root:Epoch 263 [0.4s]: train==[0.01361=0.01315 + 0.00045]
+INFO:root:Epoch 264 [0.4s]: train==[0.01441=0.01395 + 0.00046]
+INFO:root:Epoch 265 [0.4s]: train==[0.01372=0.01326 + 0.00046]
+INFO:root:Epoch 266 [0.4s]: train==[0.01418=0.01372 + 0.00046]
+INFO:root:Epoch 267 [0.4s]: train==[0.01448=0.01402 + 0.00046]
+INFO:root:Epoch 268 [0.4s]: train==[0.01413=0.01367 + 0.00046]
+INFO:root:Epoch 269 [0.4s + 14.3s]: train==[0.01397521=0.01351468 + 0.00046053], recall=[0.23830, 0.23830], precision=[0.02311, 0.02311], hit=[0.37360, 0.37360], ndcg=[0.13517, 0.13517]
+INFO:root:Epoch 270 [0.4s]: train==[0.01365=0.01319 + 0.00046]
+INFO:root:Epoch 271 [0.4s]: train==[0.01308=0.01262 + 0.00046]
+INFO:root:Epoch 272 [0.4s]: train==[0.01309=0.01263 + 0.00046]
+INFO:root:Epoch 273 [0.4s]: train==[0.01316=0.01270 + 0.00046]
+INFO:root:Epoch 274 [0.4s]: train==[0.01278=0.01231 + 0.00047]
+INFO:root:Epoch 275 [0.4s]: train==[0.01359=0.01312 + 0.00047]
+INFO:root:Epoch 276 [0.4s]: train==[0.01315=0.01268 + 0.00047]
+INFO:root:Epoch 277 [0.4s]: train==[0.01297=0.01250 + 0.00047]
+INFO:root:Epoch 278 [0.4s]: train==[0.01242=0.01195 + 0.00047]
+INFO:root:Epoch 279 [0.4s + 14.2s]: train==[0.01275629=0.01228556 + 0.00047073], recall=[0.23675, 0.23675], precision=[0.02294, 0.02294], hit=[0.37134, 0.37134], ndcg=[0.13493, 0.13493]
+INFO:root:Epoch 280 [0.4s]: train==[0.01311=0.01264 + 0.00047]
+INFO:root:Epoch 281 [0.4s]: train==[0.01326=0.01279 + 0.00047]
+INFO:root:Epoch 282 [0.4s]: train==[0.01311=0.01264 + 0.00047]
+INFO:root:Epoch 283 [0.4s]: train==[0.01329=0.01282 + 0.00047]
+INFO:root:Epoch 284 [0.4s]: train==[0.01395=0.01348 + 0.00047]
+INFO:root:Epoch 285 [0.4s]: train==[0.01162=0.01115 + 0.00048]
+INFO:root:Epoch 286 [0.4s]: train==[0.01192=0.01144 + 0.00048]
+INFO:root:Epoch 287 [0.4s]: train==[0.01288=0.01240 + 0.00048]
+INFO:root:Epoch 288 [0.4s]: train==[0.01258=0.01210 + 0.00048]
+INFO:root:Epoch 289 [0.4s + 14.3s]: train==[0.01160912=0.01112998 + 0.00047914], recall=[0.23533, 0.23533], precision=[0.02279, 0.02279], hit=[0.36817, 0.36817], ndcg=[0.13443, 0.13443]
+INFO:root:tianchi dataset best epoch189: hr:0.38024132730014953 ndcg:0.1342359367750329 recall:0.2407517991177118 precision:0.02356711915535336
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:27: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+WARNING:tensorflow:
+The TensorFlow contrib module will not be included in TensorFlow 2.0.
+For more information, please see:
+  * https://github.com/tensorflow/community/blob/master/rfcs/20180907-contrib-sunset.md
+  * https://github.com/tensorflow/addons
+  * https://github.com/tensorflow/io (for I/O related ops)
+If you depend on functionality not listed there, please file an issue.
+
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:111: The name tf.variable_scope is deprecated. Please use tf.compat.v1.variable_scope instead.
+
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:271: The name tf.log is deprecated. Please use tf.math.log instead.
+
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:56: The name tf.get_collection is deprecated. Please use tf.compat.v1.get_collection instead.
+
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:57: The name tf.train.AdamOptimizer is deprecated. Please use tf.compat.v1.train.AdamOptimizer instead.
+
+WARNING:tensorflow:From E:/PycharmProjects/MACR/macr_mf/train.py:376: The name tf.train.Saver is deprecated. Please use tf.compat.v1.train.Saver instead.
+
+INFO:root:Epoch 0 [1.0s]: train==[1.38482=1.38482 + 0.00000]
+INFO:root:Epoch 1 [0.8s]: train==[1.37695=1.37695 + 0.00000]
+INFO:root:Epoch 2 [0.8s]: train==[1.35318=1.35318 + 0.00000]
+INFO:root:Epoch 3 [0.8s]: train==[1.30784=1.30784 + 0.00000]
+INFO:root:Epoch 4 [0.7s]: train==[1.24690=1.24689 + 0.00001]
+INFO:root:Epoch 5 [0.7s]: train==[1.18240=1.18239 + 0.00001]
+INFO:root:Epoch 6 [0.7s]: train==[1.12147=1.12145 + 0.00002]
+INFO:root:Epoch 7 [0.7s]: train==[1.06381=1.06379 + 0.00003]
+INFO:root:Epoch 8 [0.8s]: train==[1.01385=1.01382 + 0.00003]
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:27: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+WARNING:tensorflow:
+The TensorFlow contrib module will not be included in TensorFlow 2.0.
+For more information, please see:
+  * https://github.com/tensorflow/community/blob/master/rfcs/20180907-contrib-sunset.md
+  * https://github.com/tensorflow/addons
+  * https://github.com/tensorflow/io (for I/O related ops)
+If you depend on functionality not listed there, please file an issue.
+
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:111: The name tf.variable_scope is deprecated. Please use tf.compat.v1.variable_scope instead.
+
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:271: The name tf.log is deprecated. Please use tf.math.log instead.
+
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:56: The name tf.get_collection is deprecated. Please use tf.compat.v1.get_collection instead.
+
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:57: The name tf.train.AdamOptimizer is deprecated. Please use tf.compat.v1.train.AdamOptimizer instead.
+
+WARNING:tensorflow:From E:/PycharmProjects/MACR/macr_mf/train.py:376: The name tf.train.Saver is deprecated. Please use tf.compat.v1.train.Saver instead.
+
+INFO:root:Epoch 0 [0.5s]: train==[1.38482=1.38482 + 0.00000]
+INFO:root:Epoch 1 [0.4s]: train==[1.37695=1.37695 + 0.00000]
+INFO:root:Epoch 2 [0.4s]: train==[1.35318=1.35318 + 0.00000]
+INFO:root:Epoch 3 [0.4s]: train==[1.30784=1.30784 + 0.00000]
+INFO:root:Epoch 4 [0.4s]: train==[1.24690=1.24689 + 0.00001]
+INFO:root:Epoch 5 [0.4s]: train==[1.18240=1.18239 + 0.00001]
+INFO:root:Epoch 6 [0.4s]: train==[1.12147=1.12145 + 0.00002]
+INFO:root:Epoch 7 [0.4s]: train==[1.06381=1.06379 + 0.00003]
+INFO:root:Epoch 8 [0.4s]: train==[1.01385=1.01382 + 0.00003]
+INFO:root:Epoch 9 [0.4s + 14.6s]: train==[0.96952474=0.96948816 + 0.00003658], recall=[0.17290, 0.17290], precision=[0.01786, 0.01786], hit=[0.29306, 0.29306], ndcg=[0.09431, 0.09431]
+INFO:root:Epoch 10 [0.4s]: train==[0.92927=0.92923 + 0.00004]
+INFO:root:Epoch 11 [0.4s]: train==[0.89220=0.89215 + 0.00005]
+INFO:root:Epoch 12 [0.4s]: train==[0.86034=0.86029 + 0.00005]
+INFO:root:Epoch 13 [0.4s]: train==[0.82780=0.82775 + 0.00006]
+INFO:root:Epoch 14 [0.4s]: train==[0.79466=0.79460 + 0.00006]
+INFO:root:Epoch 15 [0.4s]: train==[0.76451=0.76445 + 0.00006]
+INFO:root:Epoch 16 [0.4s]: train==[0.73555=0.73548 + 0.00007]
+INFO:root:Epoch 17 [0.4s]: train==[0.70570=0.70563 + 0.00007]
+INFO:root:Epoch 18 [0.4s]: train==[0.67676=0.67669 + 0.00007]
+INFO:root:Epoch 19 [0.4s + 14.6s]: train==[0.64747980=0.64740253 + 0.00007726], recall=[0.20167, 0.20167], precision=[0.02124, 0.02124], hit=[0.33348, 0.33348], ndcg=[0.10759, 0.10759]
+INFO:root:Epoch 20 [0.4s]: train==[0.61856=0.61848 + 0.00008]
+INFO:root:Epoch 21 [0.4s]: train==[0.59446=0.59438 + 0.00008]
+INFO:root:Epoch 22 [0.4s]: train==[0.56603=0.56594 + 0.00009]
+INFO:root:Epoch 23 [0.4s]: train==[0.53862=0.53853 + 0.00009]
+INFO:root:Epoch 24 [0.4s]: train==[0.51634=0.51625 + 0.00009]
+INFO:root:Epoch 25 [0.4s]: train==[0.49331=0.49322 + 0.00009]
+INFO:root:Epoch 26 [0.4s]: train==[0.47438=0.47428 + 0.00010]
+INFO:root:Epoch 27 [0.4s]: train==[0.45539=0.45529 + 0.00010]
+INFO:root:Epoch 28 [0.4s]: train==[0.43778=0.43768 + 0.00010]
+INFO:root:Epoch 29 [0.4s + 14.7s]: train==[0.42073786=0.42063677 + 0.00010108], recall=[0.20514, 0.20514], precision=[0.02189, 0.02189], hit=[0.33831, 0.33831], ndcg=[0.11021, 0.11021]
+INFO:root:Epoch 30 [0.4s]: train==[0.40346=0.40335 + 0.00010]
+INFO:root:Epoch 31 [0.4s]: train==[0.38785=0.38775 + 0.00011]
+INFO:root:Epoch 32 [0.4s]: train==[0.37338=0.37327 + 0.00011]
+INFO:root:Epoch 33 [0.4s]: train==[0.35984=0.35973 + 0.00011]
+INFO:root:Epoch 34 [0.4s]: train==[0.35049=0.35038 + 0.00011]
+INFO:root:Epoch 35 [0.4s]: train==[0.33694=0.33683 + 0.00011]
+INFO:root:Epoch 36 [0.4s]: train==[0.32694=0.32682 + 0.00012]
+INFO:root:Epoch 37 [0.4s]: train==[0.31321=0.31309 + 0.00012]
+INFO:root:Epoch 38 [0.4s]: train==[0.30782=0.30770 + 0.00012]
+INFO:root:Epoch 39 [0.4s + 14.6s]: train==[0.29441608=0.29429445 + 0.00012163], recall=[0.21421, 0.21421], precision=[0.02290, 0.02290], hit=[0.35279, 0.35279], ndcg=[0.11434, 0.11434]
+INFO:root:Epoch 40 [0.4s]: train==[0.28632=0.28619 + 0.00012]
+INFO:root:Epoch 41 [0.4s]: train==[0.27728=0.27716 + 0.00013]
+INFO:root:Epoch 42 [0.5s]: train==[0.27233=0.27220 + 0.00013]
+INFO:root:Epoch 43 [0.4s]: train==[0.26181=0.26168 + 0.00013]
+INFO:root:Epoch 44 [0.4s]: train==[0.25774=0.25761 + 0.00013]
+INFO:root:Epoch 45 [0.4s]: train==[0.25161=0.25148 + 0.00013]
+INFO:root:Epoch 46 [0.4s]: train==[0.24093=0.24079 + 0.00014]
+INFO:root:Epoch 47 [0.4s]: train==[0.23671=0.23657 + 0.00014]
+INFO:root:Epoch 48 [0.4s]: train==[0.23000=0.22986 + 0.00014]
+INFO:root:Epoch 49 [0.4s + 14.7s]: train==[0.22237733=0.22223598 + 0.00014136], recall=[0.21655, 0.21655], precision=[0.02283, 0.02283], hit=[0.35475, 0.35475], ndcg=[0.11536, 0.11536]
+INFO:root:Epoch 50 [0.4s]: train==[0.21558=0.21543 + 0.00014]
+INFO:root:Epoch 51 [0.4s]: train==[0.21438=0.21424 + 0.00015]
+INFO:root:Epoch 52 [0.4s]: train==[0.20774=0.20760 + 0.00015]
+INFO:root:Epoch 53 [0.4s]: train==[0.20122=0.20108 + 0.00015]
+INFO:root:Epoch 54 [0.4s]: train==[0.19383=0.19368 + 0.00015]
+INFO:root:Epoch 55 [0.4s]: train==[0.19237=0.19222 + 0.00015]
+INFO:root:Epoch 56 [0.4s]: train==[0.18754=0.18739 + 0.00016]
+INFO:root:Epoch 57 [0.4s]: train==[0.18043=0.18027 + 0.00016]
+INFO:root:Epoch 58 [0.4s]: train==[0.17880=0.17864 + 0.00016]
+INFO:root:Epoch 59 [0.4s + 14.7s]: train==[0.17398923=0.17382803 + 0.00016120], recall=[0.22105, 0.22105], precision=[0.02305, 0.02305], hit=[0.36003, 0.36003], ndcg=[0.11760, 0.11760]
+INFO:root:Epoch 60 [0.4s]: train==[0.17114=0.17097 + 0.00016]
+INFO:root:Epoch 61 [0.4s]: train==[0.16792=0.16776 + 0.00016]
+INFO:root:Epoch 62 [0.4s]: train==[0.16282=0.16265 + 0.00017]
+INFO:root:Epoch 63 [0.4s]: train==[0.16011=0.15994 + 0.00017]
+INFO:root:Epoch 64 [0.4s]: train==[0.15490=0.15473 + 0.00017]
+INFO:root:Epoch 65 [0.4s]: train==[0.15180=0.15163 + 0.00017]
+INFO:root:Epoch 66 [0.4s]: train==[0.14971=0.14954 + 0.00017]
+INFO:root:Epoch 67 [0.4s]: train==[0.14455=0.14438 + 0.00018]
+INFO:root:Epoch 68 [0.4s]: train==[0.14355=0.14337 + 0.00018]
+INFO:root:Epoch 69 [0.4s + 14.6s]: train==[0.14118135=0.14100092 + 0.00018043], recall=[0.22049, 0.22049], precision=[0.02290, 0.02290], hit=[0.35913, 0.35913], ndcg=[0.11854, 0.11854]
+INFO:root:Epoch 70 [0.4s]: train==[0.13366=0.13348 + 0.00018]
+INFO:root:Epoch 71 [0.4s]: train==[0.13232=0.13214 + 0.00019]
+INFO:root:Epoch 72 [0.4s]: train==[0.13305=0.13286 + 0.00019]
+INFO:root:Epoch 73 [0.4s]: train==[0.13065=0.13046 + 0.00019]
+INFO:root:Epoch 74 [0.4s]: train==[0.12483=0.12464 + 0.00019]
+INFO:root:Epoch 75 [0.4s]: train==[0.12294=0.12275 + 0.00019]
+INFO:root:Epoch 76 [0.4s]: train==[0.12088=0.12068 + 0.00019]
+INFO:root:Epoch 77 [0.4s]: train==[0.11898=0.11878 + 0.00020]
+INFO:root:Epoch 78 [0.4s]: train==[0.11291=0.11271 + 0.00020]
+INFO:root:Epoch 79 [0.4s + 14.5s]: train==[0.11119671=0.11099714 + 0.00019958], recall=[0.22456, 0.22456], precision=[0.02305, 0.02305], hit=[0.36305, 0.36305], ndcg=[0.12116, 0.12116]
+INFO:root:Epoch 80 [0.4s]: train==[0.11108=0.11088 + 0.00020]
+INFO:root:Epoch 81 [0.4s]: train==[0.10777=0.10757 + 0.00020]
+INFO:root:Epoch 82 [0.4s]: train==[0.10713=0.10692 + 0.00021]
+INFO:root:Epoch 83 [0.4s]: train==[0.10520=0.10500 + 0.00021]
+INFO:root:Epoch 84 [0.4s]: train==[0.10138=0.10117 + 0.00021]
+INFO:root:Epoch 85 [0.4s]: train==[0.10076=0.10055 + 0.00021]
+INFO:root:Epoch 86 [0.4s]: train==[0.09948=0.09927 + 0.00021]
+INFO:root:Epoch 87 [0.4s]: train==[0.09620=0.09598 + 0.00021]
+INFO:root:Epoch 88 [0.4s]: train==[0.09554=0.09533 + 0.00022]
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:27: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+WARNING:tensorflow:
+The TensorFlow contrib module will not be included in TensorFlow 2.0.
+For more information, please see:
+  * https://github.com/tensorflow/community/blob/master/rfcs/20180907-contrib-sunset.md
+  * https://github.com/tensorflow/addons
+  * https://github.com/tensorflow/io (for I/O related ops)
+If you depend on functionality not listed there, please file an issue.
+
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:111: The name tf.variable_scope is deprecated. Please use tf.compat.v1.variable_scope instead.
+
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:271: The name tf.log is deprecated. Please use tf.math.log instead.
+
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:56: The name tf.get_collection is deprecated. Please use tf.compat.v1.get_collection instead.
+
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:57: The name tf.train.AdamOptimizer is deprecated. Please use tf.compat.v1.train.AdamOptimizer instead.
+
+WARNING:tensorflow:From E:/PycharmProjects/MACR/macr_mf/train.py:376: The name tf.train.Saver is deprecated. Please use tf.compat.v1.train.Saver instead.
+
+INFO:root:Epoch 0 [0.8s]: train==[1.38482=1.38482 + 0.00000]
+INFO:root:Epoch 1 [0.7s]: train==[1.37695=1.37695 + 0.00000]
+INFO:root:Epoch 2 [0.7s]: train==[1.35318=1.35318 + 0.00000]
+INFO:root:Epoch 3 [0.7s]: train==[1.30784=1.30784 + 0.00000]
+INFO:root:Epoch 4 [0.7s]: train==[1.24690=1.24689 + 0.00001]
+INFO:root:Epoch 5 [0.7s]: train==[1.18240=1.18239 + 0.00001]
+INFO:root:Epoch 6 [0.7s]: train==[1.12147=1.12145 + 0.00002]
+INFO:root:Epoch 7 [0.8s]: train==[1.06381=1.06379 + 0.00003]
+INFO:root:Epoch 8 [0.7s]: train==[1.01385=1.01382 + 0.00003]
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:27: The name tf.placeholder is deprecated. Please use tf.compat.v1.placeholder instead.
+
+WARNING:tensorflow:
+The TensorFlow contrib module will not be included in TensorFlow 2.0.
+For more information, please see:
+  * https://github.com/tensorflow/community/blob/master/rfcs/20180907-contrib-sunset.md
+  * https://github.com/tensorflow/addons
+  * https://github.com/tensorflow/io (for I/O related ops)
+If you depend on functionality not listed there, please file an issue.
+
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:111: The name tf.variable_scope is deprecated. Please use tf.compat.v1.variable_scope instead.
+
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:271: The name tf.log is deprecated. Please use tf.math.log instead.
+
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:56: The name tf.get_collection is deprecated. Please use tf.compat.v1.get_collection instead.
+
+WARNING:tensorflow:From E:\PycharmProjects\MACR\macr_mf\model.py:57: The name tf.train.AdamOptimizer is deprecated. Please use tf.compat.v1.train.AdamOptimizer instead.
+
+WARNING:tensorflow:From E:/PycharmProjects/MACR/macr_mf/train.py:376: The name tf.train.Saver is deprecated. Please use tf.compat.v1.train.Saver instead.
+
+INFO:root:Epoch 0 [0.8s]: train==[1.38482=1.38482 + 0.00000]
+INFO:root:Epoch 1 [0.7s]: train==[1.37695=1.37695 + 0.00000]
+INFO:root:Epoch 2 [0.7s]: train==[1.35318=1.35318 + 0.00000]
+INFO:root:Epoch 3 [0.7s]: train==[1.30784=1.30784 + 0.00000]
+INFO:root:Epoch 4 [0.7s]: train==[1.24690=1.24689 + 0.00001]
+INFO:root:Epoch 5 [0.7s]: train==[1.18240=1.18239 + 0.00001]
+INFO:root:Epoch 6 [0.7s]: train==[1.12147=1.12145 + 0.00002]
+INFO:root:Epoch 7 [0.7s]: train==[1.06381=1.06379 + 0.00003]
+INFO:root:Epoch 8 [0.7s]: train==[1.01385=1.01382 + 0.00003]
