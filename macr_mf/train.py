@@ -1,5 +1,6 @@
 import tensorflow as tf
 import numpy as np
+import pandas as pd
 import os
 import sys
 import random
@@ -161,7 +162,7 @@ def valid_one_user(x):
 
     return get_performance(user_pos_valid, r, Ks)
 
-def test(sess, model, test_users, batch_test_flag = False, model_type = 'o', valid_set="test", item_pop_test=None, pop_exp = 0):
+def test(sess, model, test_users, batch_test_flag = False, model_type = 'c', valid_set="test", item_pop_test=None, pop_exp = 0):
 
     result = {'precision': np.zeros(len(Ks)), 'recall': np.zeros(len(Ks)), 'ndcg': np.zeros(len(Ks)),
               'hit_ratio': np.zeros(len(Ks))}
@@ -237,6 +238,7 @@ def test(sess, model, test_users, batch_test_flag = False, model_type = 'o', val
                                                                 model.pos_items: item_batch})
             elif model_type == 'irc':
                 rate_batch = sess.run(model.item_rand_ratings, {model.users: user_batch,
+
                                                                 model.pos_items: item_batch})
             elif model_type == 'rubi_c':
                 rate_batch = sess.run(model.rubi_ratings, {model.users: user_batch,
@@ -331,11 +333,12 @@ def early_stop(hr, ndcg, recall, precision, cur_epoch, config, stopping_step, fl
     return config, stopping_step, should_stop
 
 
-def submit(sess, model, submit_users, batch_test_flag = False, model_type = 'o', item_pop_test=None, pop_exp = 0):
+def submit(sess, model, users_to_submit, batch_test_flag=False, model_type='c', item_pop_test=None, pop_exp=0):
 
     u_batch_size = BATCH_SIZE
     i_batch_size = BATCH_SIZE
 
+    submit_users = users_to_submit[:, 0]
     n_submit_users = len(submit_users)
     n_user_batchs = n_submit_users // u_batch_size + 1
 
@@ -435,9 +438,13 @@ def submit(sess, model, submit_users, batch_test_flag = False, model_type = 'o',
             for i in submit_items:
                 item_score[i] = rate_user[i]
             K_max_item_score = heapq.nlargest(5, item_score, key=item_score.get)
+            users_to_submit[users_to_submit[:, 0] == user, 1:] = K_max_item_score
 
-    print('i am submit.')
-
+    # 按照提交格式定义列名
+    users_to_submit = pd.DataFrame(users_to_submit)
+    users_to_submit = users_to_submit.rename(columns={0: 'user_id', 1: 'article_1', 2: 'article_2',
+                                             3: 'article_3', 4: 'article_4', 5: 'article_5'})
+    users_to_submit.to_csv("../data/{}/submit.csv".format(args.dataset), index=False, header=True)
 
 
 if __name__ == '__main__':
@@ -629,7 +636,7 @@ if __name__ == '__main__':
                 if args.test == "normal" or args.test == 'rubi_user_wise':
                     if args.valid_set == "test":
                         ret = test(sess, model, users_to_test, valid_set="test")
-                    elif args.valid_set == "valid":
+                    elif args.valid_s == "valid":
                         ret = test(sess, model, users_to_test, valid_set="valid")
                     # ret = test(sess, model, users_to_test)
                     t3 = time()
@@ -646,7 +653,7 @@ if __name__ == '__main__':
                                     ret['ndcg'][0], ret['ndcg'][-1])
                         print(perf_str)
                         logging.info(perf_str)
-                elif args.test=="rubi":
+                elif args.test == "rubi":
                     print('Epoch %d'%(epoch))
                     best_c = 0
                     best_hr = 0
@@ -716,8 +723,8 @@ if __name__ == '__main__':
 
             # submit
             data_path = '../data/{}/submit.csv'.format(args.dataset)
-            users_to_sample = np.loadtxt(data_path, dtype=int, skiprows=1, delimiter=',')
-            submit(sess, model, users_to_sample[:, 0])
+            users_to_submit = np.loadtxt(data_path, dtype=int, skiprows=1, delimiter=',')
+            submit(sess, model, users_to_submit)
 
 
         # pretrain

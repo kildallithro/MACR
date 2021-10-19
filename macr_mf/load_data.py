@@ -50,6 +50,7 @@ class Data():
                 test_file = self.path + 'test.txt'
                 with open(train_file) as f:
                     for line in f.readlines():
+                        line = line.rstrip()
                         line = line.strip('\n').split(' ')
                         if len(line) == 0:
                             continue
@@ -86,6 +87,7 @@ class Data():
                 if args.valid_set == "test":
                     with open(test_file) as f:
                         for line in f.readlines():
+                            line = line.rstrip()
                             line = line.strip('\n').split(' ')
                             if len(line) == 0:
                                 continue
