@@ -162,7 +162,7 @@ def valid_one_user(x):
 
     return get_performance(user_pos_valid, r, Ks)
 
-def test(sess, model, test_users, batch_test_flag = False, model_type = 'c', valid_set="test", item_pop_test=None, pop_exp = 0):
+def test(sess, model, test_users, batch_test_flag = True, model_type = 'c', valid_set="test", item_pop_test=None, pop_exp = 0):
 
     result = {'precision': np.zeros(len(Ks)), 'recall': np.zeros(len(Ks)), 'ndcg': np.zeros(len(Ks)),
               'hit_ratio': np.zeros(len(Ks))}
@@ -262,7 +262,7 @@ def test(sess, model, test_users, batch_test_flag = False, model_type = 'c', val
                 exit()
         
         item_acc_list = {}
-        rate_batch = np.array(rate_batch)  # (B, N)
+        rate_batch = np.array(rate_batch, dtype=int)  # (B, N)
         for i in range(ITEM_NUM):
             item_acc_list[i] = 0
         all_items = set(range(ITEM_NUM))
@@ -704,27 +704,28 @@ if __name__ == '__main__':
                 # save the user & item embeddings for pretraining.
                 config, stopping_step, should_stop = early_stop(ret['hit_ratio'][0], ret['ndcg'][0], ret['recall'][0], ret['precision'][0], epoch, config, stopping_step)
                 if args.save_flag == 1:
-                    if os.path.exists('{}_{}_checkpoint/wd_{}_lr_{}_{}/'.format(args.model, args.dataset, args.wd, args.lr, args.saveID)) == False:
-                        os.makedirs('{}_{}_checkpoint/wd_{}_lr_{}_{}/'.format(args.model, args.dataset, args.wd, args.lr, args.saveID))
-                    saver.save(sess, '{}_{}_checkpoint/wd_{}_lr_{}_{}/{}_ckpt.ckpt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID, epoch))
+                    if os.path.exists('MACR/macr_mf/{}_{}_checkpoint/wd_{}_lr_{}_{}/'.format(args.model, args.dataset, args.wd, args.lr, args.saveID)) == False:
+                        os.makedirs('MACR/macr_mf/{}_{}_checkpoint/wd_{}_lr_{}_{}/'.format(args.model, args.dataset, args.wd, args.lr, args.saveID))
+                    saver.save(sess, 'MACR/macr_mf/{}_{}_checkpoint/wd_{}_lr_{}_{}/{}_ckpt.ckpt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID, epoch))
 
                 if should_stop and args.early_stop == 1:
                     print("{} dataset best epoch{}: hr:{} ndcg:{} recall:{} precision:{}".format(args.dataset, config['best_epoch'],config['best_hr'],config['best_ndcg'], config['best_recall'], config['best_pre']))
                     logging.info("{} dataset best epoch{}: hr:{} ndcg:{} recall:{} precision:{}".format(args.dataset, config['best_epoch'],config['best_hr'],config['best_ndcg'], config['best_recall'], config['best_pre']))
 
-                    with open('{}_{}_checkpoint/wd_{}_lr_{}_{}/best_epoch.txt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID),'w') as f:
+                    with open('MACR/macr_mf/{}_{}_checkpoint/wd_{}_lr_{}_{}/best_epoch.txt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID),'w') as f:
                         print(config['best_epoch'], file = f)
 
                     if args.test=='rubi':
-                        with open('{}_{}_checkpoint/wd_{}_lr_{}_{}/best_c.txt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID),'w') as f:
+                        with open('MACR/macr_mf/{}_{}_checkpoint/wd_{}_lr_{}_{}/best_c.txt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID),'w') as f:
                             print(config['best_c'], file = f)
 
                     break
 
             # submit
-            data_path = '../data/{}/submit.csv'.format(args.dataset)
-            users_to_submit = np.loadtxt(data_path, dtype=int, skiprows=1, delimiter=',')
-            submit(sess, model, users_to_submit)
+            if args.dataset == 'tianchi_sample' or args.dataset == 'tianchi_df':
+                data_path = '../data/{}/submit.csv'.format(args.dataset)
+                users_to_submit = np.loadtxt(data_path, dtype=int, skiprows=1, delimiter=',')
+                submit(sess, model, users_to_submit)
 
 
         # pretrain

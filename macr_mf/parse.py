@@ -4,7 +4,7 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Run pop_bias.")
     parser.add_argument('--data_path', nargs='?', default='./data/',
                         help='Input data path.')
-    parser.add_argument('--dataset', nargs='?', default='tianchi_df',
+    parser.add_argument('--dataset', nargs='?', default='tianchi_sample',
                         help='Choose a dataset')   # movielens_ml_1m
     parser.add_argument('--source', nargs='?', default='normal',
     help='normal | dice')
@@ -52,7 +52,7 @@ def parse_args():
                         help='Train/Test.')
     parser.add_argument('--save_flag', type=int, default=1,
                         help='0: Disable model saver, 1: Activate model saver')
-    parser.add_argument('--cuda', type=str, default='1',
+    parser.add_argument('--cuda', type=str, default='0',
                         help='Avaiable GPU ID')
     parser.add_argument('--pretrain', type=int, default=0,
                         help='0: no pretrain, 1: load pretrain model')
