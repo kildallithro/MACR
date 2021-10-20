@@ -31,6 +31,11 @@ python ./macr_mf/train.py --dataset addressa --batch_size 1024 --cuda 0 --saveID
 ```
 MACR MF:
 
+tianchi_df
+```Python
+python MACR/macr_mf/train.py --dataset tianchi_df --batch_size 1024 --cuda 1 --saveID 1 --log_interval 10 --lr 0.001 --train normalbce --test normal
+```
+
 ML10M
 ```Python
 python ./macr_mf/train.py --dataset ml_10m --batch_size 8192 --cuda 0 --saveID 0 --log_interval 10 --lr 0.001 --check_c 1 --c 40 --train rubibceboth --test rubi --alpha 1e-3 --beta 1e-3
