@@ -2,9 +2,9 @@ import argparse
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Run pop_bias.")
-    parser.add_argument('--data_path', nargs='?', default='./data/',
+    parser.add_argument('--data_path', nargs='?', default='MACR/data/',
                         help='Input data path.')
-    parser.add_argument('--dataset', nargs='?', default='tianchi_sample',
+    parser.add_argument('--dataset', nargs='?', default='addressa',
                         help='Choose a dataset')   # movielens_ml_1m
     parser.add_argument('--source', nargs='?', default='normal',
     help='normal | dice')

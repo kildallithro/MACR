@@ -262,7 +262,7 @@ def test(sess, model, test_users, batch_test_flag = True, model_type = 'c', vali
                 exit()
         
         item_acc_list = {}
-        rate_batch = np.array(rate_batch)  # (B, N)
+        rate_batch = np.array(rate_batch, dtype=int)  # (B, N)
         for i in range(ITEM_NUM):
             item_acc_list[i] = 0
         all_items = set(range(ITEM_NUM))
@@ -331,120 +331,6 @@ def early_stop(hr, ndcg, recall, precision, cur_epoch, config, stopping_step, fl
         should_stop = False
 
     return config, stopping_step, should_stop
-
-
-def submit(sess, model, users_to_submit, batch_test_flag=False, model_type='c', item_pop_test=None, pop_exp=0):
-
-    u_batch_size = BATCH_SIZE
-    i_batch_size = BATCH_SIZE
-
-    submit_users = users_to_submit[:, 0]
-    n_submit_users = len(submit_users)
-    n_user_batchs = n_submit_users // u_batch_size + 1
-
-    total_rate = np.empty(shape=[0, ITEM_NUM])
-    for u_batch_id in range(n_user_batchs):
-
-        start = u_batch_id * u_batch_size
-        end = (u_batch_id + 1) * u_batch_size
-
-        user_batch = submit_users[start: end]
-
-        if batch_test_flag:
-
-            n_item_batchs = ITEM_NUM // i_batch_size + 1
-            rate_batch = np.zeros(shape=(len(user_batch), ITEM_NUM))
-
-            i_count = 0
-            for i_batch_id in range(n_item_batchs):
-                i_start = i_batch_id * i_batch_size
-                i_end = min((i_batch_id + 1) * i_batch_size, ITEM_NUM)
-
-                item_batch = range(i_start, i_end)
-                if model_type == 'o':
-                    i_rate_batch = sess.run(model.batch_ratings, {model.users: user_batch,
-                                                                  model.pos_items: item_batch})
-                elif model_type == 'c':
-                    i_rate_batch = sess.run(model.user_const_ratings, {model.users: user_batch,
-                                                                       model.pos_items: item_batch})
-                elif model_type == 'ic':
-                    i_rate_batch = sess.run(model.item_const_ratings, {model.users: user_batch,
-                                                                       model.pos_items: item_batch})
-                elif model_type == 'rc':
-                    i_rate_batch = sess.run(model.user_rand_ratings, {model.users: user_batch,
-                                                                      model.pos_items: item_batch})
-                elif model_type == 'irc':
-                    i_rate_batch = sess.run(model.item_rand_ratings, {model.users: user_batch,
-                                                                      model.pos_items: item_batch})
-                else:
-                    print('model type error.')
-                    exit()
-
-                rate_batch[:, i_start: i_end] = i_rate_batch
-                i_count += i_rate_batch.shape[1]
-
-            assert i_count == ITEM_NUM
-
-        else:
-            item_batch = list(range(ITEM_NUM))
-            if model_type == 'o':
-                rate_batch = sess.run(model.batch_ratings, {model.users: user_batch,
-                                                            model.pos_items: item_batch})
-                total_rate = np.vstack((total_rate, rate_batch))
-            elif model_type == 'c':
-                rate_batch = sess.run(model.user_const_ratings, {model.users: user_batch,
-                                                                 model.pos_items: item_batch})
-            elif model_type == 'ic':
-                rate_batch = sess.run(model.item_const_ratings, {model.users: user_batch,
-                                                                 model.pos_items: item_batch})
-            elif model_type == 'rc':
-                rate_batch = sess.run(model.user_rand_ratings, {model.users: user_batch,
-                                                                model.pos_items: item_batch})
-            elif model_type == 'irc':
-                rate_batch = sess.run(model.item_rand_ratings, {model.users: user_batch,
-                                                                model.pos_items: item_batch})
-            elif model_type == 'rubi_c':
-                rate_batch = sess.run(model.rubi_ratings, {model.users: user_batch,
-                                                           model.pos_items: item_batch})
-            elif model_type == "direct_minus_c":
-                rate_batch = sess.run(model.direct_minus_ratings, {model.users: user_batch,
-                                                                   model.pos_items: item_batch})
-            elif model_type == 'rubi_user_c':
-                rate_batch = sess.run(model.rubi_ratings_userc, {model.users: user_batch,
-                                                                 model.pos_items: item_batch})
-            elif model_type == 'rubi_both':
-                rate_batch = sess.run(model.rubi_ratings_both, {model.users: user_batch,
-                                                                model.pos_items: item_batch})
-            elif model_type == "item_pop_test":
-                rate_batch = sess.run(model.rubi_ratings_both_poptest, {model.users: user_batch,
-                                                                        model.pos_items: item_batch})
-                # rate_batch = (rate_batch-np.min(rate_batch))*np.power(item_pop_test, pop_exp)
-                rate_batch = np.ones_like(rate_batch) * np.power(item_pop_test, pop_exp)
-            else:
-                print('model type error.')
-                exit()
-
-        item_acc_list = {}
-        rate_batch = np.array(rate_batch)  # (B, N)
-        for i in range(ITEM_NUM):
-            item_acc_list[i] = 0
-        all_items = set(range(ITEM_NUM))
-        for j, rate_user in enumerate(rate_batch):
-            user = user_batch[j]
-            test_items = data.test_user_list[user]
-            train_items = data.train_user_list[user]
-            submit_items = list(all_items - set(train_items) - set(test_items))
-            item_score = dict()
-            for i in submit_items:
-                item_score[i] = rate_user[i]
-            K_max_item_score = heapq.nlargest(5, item_score, key=item_score.get)
-            users_to_submit[users_to_submit[:, 0] == user, 1:] = K_max_item_score
-
-    # 按照提交格式定义列名
-    users_to_submit = pd.DataFrame(users_to_submit)
-    users_to_submit = users_to_submit.rename(columns={0: 'user_id', 1: 'article_1', 2: 'article_2',
-                                             3: 'article_3', 4: 'article_4', 5: 'article_5'})
-    users_to_submit.to_csv("../data/{}/submit.csv".format(args.dataset), index=False, header=True)
 
 
 if __name__ == '__main__':
@@ -704,28 +590,22 @@ if __name__ == '__main__':
                 # save the user & item embeddings for pretraining.
                 config, stopping_step, should_stop = early_stop(ret['hit_ratio'][0], ret['ndcg'][0], ret['recall'][0], ret['precision'][0], epoch, config, stopping_step)
                 if args.save_flag == 1:
-                    if os.path.exists('MACR/macr_mf/{}_{}_checkpoint/wd_{}_lr_{}_{}/'.format(args.model, args.dataset, args.wd, args.lr, args.saveID)) == False:
-                        os.makedirs('MACR/macr_mf/{}_{}_checkpoint/wd_{}_lr_{}_{}/'.format(args.model, args.dataset, args.wd, args.lr, args.saveID))
-                    saver.save(sess, 'MACR/macr_mf/{}_{}_checkpoint/wd_{}_lr_{}_{}/{}_ckpt.ckpt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID, epoch))
+                    if os.path.exists('{}_{}_checkpoint/wd_{}_lr_{}_{}/'.format(args.model, args.dataset, args.wd, args.lr, args.saveID)) == False:
+                        os.makedirs('{}_{}_checkpoint/wd_{}_lr_{}_{}/'.format(args.model, args.dataset, args.wd, args.lr, args.saveID))
+                    saver.save(sess, '{}_{}_checkpoint/wd_{}_lr_{}_{}/{}_ckpt.ckpt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID, epoch))
 
                 if should_stop and args.early_stop == 1:
-                    print("{} dataset best epoch{}: hr:{} ndcg:{} recall:{} precision:{}".format(args.dataset, config['best_epoch'],config['best_hr'],config['best_ndcg'], config['best_recall'], config['best_pre']))
+                    print("{} dataset best epoch {}: hr:{} ndcg:{} recall:{} precision:{}".format(args.dataset, config['best_epoch'],config['best_hr'],config['best_ndcg'], config['best_recall'], config['best_pre']))
                     logging.info("{} dataset best epoch{}: hr:{} ndcg:{} recall:{} precision:{}".format(args.dataset, config['best_epoch'],config['best_hr'],config['best_ndcg'], config['best_recall'], config['best_pre']))
 
-                    with open('MACR/macr_mf/{}_{}_checkpoint/wd_{}_lr_{}_{}/best_epoch.txt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID),'w') as f:
+                    with open('{}_{}_checkpoint/wd_{}_lr_{}_{}/best_epoch.txt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID),'w') as f:
                         print(config['best_epoch'], file = f)
 
                     if args.test=='rubi':
-                        with open('MACR/macr_mf/{}_{}_checkpoint/wd_{}_lr_{}_{}/best_c.txt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID),'w') as f:
+                        with open('{}_{}_checkpoint/wd_{}_lr_{}_{}/best_c.txt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID),'w') as f:
                             print(config['best_c'], file = f)
 
                     break
-
-            # submit
-            data_path = 'MACR/data/{}/submit.csv'.format(args.dataset)
-            users_to_submit = np.loadtxt(data_path, dtype=int, skiprows=1, delimiter=',')
-            submit(sess, model, users_to_submit)
-
 
         # pretrain
         else:
