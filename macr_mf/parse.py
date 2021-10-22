@@ -4,13 +4,13 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Run pop_bias.")
     parser.add_argument('--data_path', nargs='?', default='MACR/data/',
                         help='Input data path.')
-    parser.add_argument('--dataset', nargs='?', default='addressa',
+    parser.add_argument('--dataset', nargs='?', default='pcic',
                         help='Choose a dataset')   # movielens_ml_1m
     parser.add_argument('--source', nargs='?', default='normal',
     help='normal | dice')
-    parser.add_argument('--train', nargs='?', default='normalbce',
+    parser.add_argument('--train', nargs='?', default='rubibceboth',
     help='normalbce | rubibceboth')
-    parser.add_argument('--test', nargs='?', default='normal',
+    parser.add_argument('--test', nargs='?', default='rubi',
     help='normal | rubi')
     parser.add_argument('--valid_set', nargs='?', default='test',
     help='test | valid')

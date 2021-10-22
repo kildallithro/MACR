@@ -42,7 +42,7 @@ class BPRMF:
         self.const_embedding = self.weights['c']
         self.user_c = tf.nn.embedding_lookup(self.weights['user_c'], self.users)
 
-        self.batch_ratings = tf.matmul(user_embedding, pos_item_embedding, transpose_a=False, transpose_b = True)    #prediction, shape(user_embedding) != shape(pos_item_embedding)
+        self.batch_ratings = tf.matmul(user_embedding, pos_item_embedding, transpose_a=False, transpose_b=True)    #prediction, shape(user_embedding) != shape(pos_item_embedding)
         self.user_const_ratings = self.batch_ratings - tf.matmul(self.const_embedding, pos_item_embedding, transpose_a=False, transpose_b = True)   #auto tile
         self.item_const_ratings = self.batch_ratings - tf.matmul(user_embedding, self.const_embedding, transpose_a=False, transpose_b = True)       #auto tile
         self.user_rand_ratings = self.batch_ratings - tf.matmul(user_rand_embedding, pos_item_embedding, transpose_a=False, transpose_b = True)
@@ -56,8 +56,8 @@ class BPRMF:
         trainable_v1 = tf.get_collection(tf.GraphKeys.TRAINABLE_VARIABLES, 'parameter')
         self.opt = tf.train.AdamOptimizer(learning_rate=self.lr).minimize(self.loss, var_list = trainable_v1)
         # two branch
-        self.w = tf.Variable(self.initializer([self.emb_dim,1]), name = 'item_branch')
-        self.w_user = tf.Variable(self.initializer([self.emb_dim,1]), name = 'user_branch')
+        self.w = tf.Variable(self.initializer([self.emb_dim, 1]), name='item_branch')
+        self.w_user = tf.Variable(self.initializer([self.emb_dim, 1]), name='user_branch')
         self.sigmoid_yu = tf.squeeze(tf.nn.sigmoid(tf.matmul(self.weights['user_embedding'], self.w_user)))
         self.sigmoid_yi = tf.squeeze(tf.nn.sigmoid(tf.matmul(self.weights['item_embedding'], self.w)))
         # two branch bpr
@@ -69,7 +69,7 @@ class BPRMF:
         self.loss_two_bce = self.mf_loss_two_bce + self.reg_loss_two_bce
         self.opt_two_bce = tf.train.AdamOptimizer(learning_rate=self.lr).minimize(self.loss_two_bce)
         # two branch bce user&item
-        self.mf_loss_two_bce_both, self.reg_loss_two_bce_both = self.create_bce_loss_two_brach_both(user_embedding, pos_item_embedding, neg_item_embedding)
+        self.mf_loss_two_bce_both, self.reg_loss_two_bce_both = self.create_bce_loss_two_branch_both(user_embedding, pos_item_embedding, neg_item_embedding)
         self.loss_two_bce_both = self.mf_loss_two_bce_both + self.reg_loss_two_bce_both
         self.opt_two_bce_both = tf.train.AdamOptimizer(learning_rate=self.lr).minimize(self.loss_two_bce_both)
         # 2-stage training
@@ -114,10 +114,10 @@ class BPRMF:
             weights['user_rand_embedding'] = tf.Variable(initializer([self.n_users, self.emb_dim]), name = 'user_rand_embedding', trainable = False)
             weights['item_rand_embedding'] = tf.Variable(initializer([self.n_items, self.emb_dim]), name = 'item_rand_embedding', trainable = False)
         with tf.variable_scope('const_embedding'):
-            self.rubi_c = tf.Variable(tf.zeros([1]), name = 'rubi_c')
-            weights['c'] = tf.Variable(tf.zeros([1, self.emb_dim]), name = 'c')
+            self.rubi_c = tf.Variable(tf.zeros([1]), name='rubi_c')
+            weights['c'] = tf.Variable(tf.zeros([1, self.emb_dim]), name='c')
         
-        weights['user_c'] = tf.Variable(tf.zeros([self.n_users, 1]), name = 'user_c_v')
+        weights['user_c'] = tf.Variable(tf.zeros([self.n_users, 1]), name='user_c_v')
 
         return weights
 
@@ -163,8 +163,8 @@ class BPRMF:
         # neg_items_stop = tf.stop_gradient(neg_items)
         pos_items_stop = pos_items
         neg_items_stop = neg_items
-        self.pos_item_scores = tf.matmul(pos_items_stop,self.w)
-        self.neg_item_scores = tf.matmul(neg_items_stop,self.w)
+        self.pos_item_scores = tf.matmul(pos_items_stop, self.w)
+        self.neg_item_scores = tf.matmul(neg_items_stop, self.w)
         # self.rubi_ratings = (self.batch_ratings-self.rubi_c)*tf.squeeze(tf.nn.sigmoid(self.pos_item_scores))
         # self.direct_minus_ratings = self.batch_ratings-self.rubi_c*tf.squeeze(tf.nn.sigmoid(self.pos_item_scores))
         # first branch
@@ -182,7 +182,7 @@ class BPRMF:
         reg_loss = self.decay * regularizer
         return mf_loss, reg_loss
 
-    def create_bce_loss_two_brach_both(self, users, pos_items, neg_items):
+    def create_bce_loss_two_branch_both(self, users, pos_items, neg_items):
         pos_scores = tf.reduce_sum(tf.multiply(users, pos_items), axis=1)   #users, pos_items, neg_items have the same shape
         neg_scores = tf.reduce_sum(tf.multiply(users, neg_items), axis=1)
         # item score
@@ -191,12 +191,14 @@ class BPRMF:
         pos_items_stop = pos_items
         neg_items_stop = neg_items
         users_stop = users
-        self.pos_item_scores = tf.matmul(pos_items_stop,self.w)
-        self.neg_item_scores = tf.matmul(neg_items_stop,self.w)
+        self.pos_item_scores = tf.matmul(pos_items_stop, self.w)
+        self.neg_item_scores = tf.matmul(neg_items_stop, self.w)
         self.user_scores = tf.matmul(users_stop, self.w_user)
         # self.rubi_ratings_both = (self.batch_ratings-self.rubi_c)*(tf.transpose(tf.nn.sigmoid(self.pos_item_scores))+tf.nn.sigmoid(self.user_scores))
         # self.direct_minus_ratings_both = self.batch_ratings-self.rubi_c*(tf.transpose(tf.nn.sigmoid(self.pos_item_scores))+tf.nn.sigmoid(self.user_scores))
         self.rubi_ratings_both = (self.batch_ratings-self.rubi_c)*tf.transpose(tf.nn.sigmoid(self.pos_item_scores))*tf.nn.sigmoid(self.user_scores)
+        self.rubi_ratings_first = self.batch_ratings*tf.transpose(tf.nn.sigmoid(self.pos_item_scores))*tf.nn.sigmoid(self.user_scores)
+        self.rubi_ratings_second = tf.transpose(tf.nn.sigmoid(self.pos_item_scores))*tf.nn.sigmoid(self.user_scores)
         self.rubi_ratings_both_poptest = self.batch_ratings*tf.nn.sigmoid(self.user_scores)
         self.direct_minus_ratings_both = self.batch_ratings-self.rubi_c*tf.transpose(tf.nn.sigmoid(self.pos_item_scores))*tf.nn.sigmoid(self.user_scores)
         # first branch

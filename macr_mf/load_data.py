@@ -46,6 +46,7 @@ class Data():
                 self.valid_users = set(self.valid_user_list.keys())
             else:
                 train_file = self.path + 'train.txt'
+                train_c_file = self.path + 'train_c.txt'
                 valid_file = self.path + 'valid.txt'
                 test_file = self.path + 'test.txt'
                 with open(train_file) as f:
@@ -65,6 +66,23 @@ class Data():
                         self.n_users = max(self.n_users, user)
                         self.n_items = max(self.n_items, max(items))
                         self.n_train += len(items)
+                # with open(train_c_file) as f:
+                #     for line in f.readlines():
+                #         line = line.rstrip()
+                #         line = line.strip('\n').split(' ')
+                #         if len(line) == 0:
+                #             continue
+                #         line = [int(i) for i in line]
+                #         user = line[0]
+                #         items = line[1:]
+                #         if (len(items)==0):
+                #             continue
+                #         self.train_c_user_list[user] = items
+                #         for item in items:
+                #             self.train_c_item_list[item].append(user)
+                #         self.n_users = max(self.n_users, user)
+                #         self.n_items = max(self.n_items, max(items))
+                #         self.n_train += len(items)
                 if args.valid_set == "valid":
                     with open(valid_file) as f:
                         for line in f.readlines():
@@ -513,8 +531,10 @@ class Data():
         self.valid_users = set()
         self.valid_items = set()
         self.train_user_list = collections.defaultdict(list)
+        self.train_c_user_list = collections.defaultdict(list)
         self.test_user_list = collections.defaultdict(list)
         self.train_item_list = collections.defaultdict(list)
+        self.train_c_item_list = collections.defaultdict(list)
         self.test_item_list = collections.defaultdict(list)
         self.valid_user_list = collections.defaultdict(list)
         self.valid_item_list = collections.defaultdict(list)
@@ -563,6 +583,33 @@ class Data():
 
         return users, pos_items, neg_items
 
+
+    def sample_c(self):
+        if self.batch_size <= self.n_users:
+            users = rd.sample(self.users, self.batch_size)
+        else:
+            users = [rd.choice(self.users) for _ in range(self.batch_size)]
+
+        pos_items, neg_items = [], []
+
+        for user in users:
+            if self.train_c_user_list[user] == []:
+                pos_items.append(0)
+            else:
+                pos_items.append(rd.choice(self.train_c_user_list[user]))
+            while True:
+                neg_item = rd.choice(self.items)
+                if neg_item not in self.train_c_user_list[user]:
+                    neg_items.append(neg_item)
+                    break
+
+        for i in range(len(users)):
+            if pos_items[i] >= self.n_items:
+                neg_items[i] += self.n_items
+
+        return users, pos_items, neg_items
+
+
     def sample2(self):
         if self.batch_size <= len(self.valid_users):
             users = rd.sample(self.valid_users, self.batch_size)
@@ -604,4 +651,3 @@ class Data():
                     break
 
         return users, pos_items, neg_items
-        
