@@ -66,23 +66,25 @@ class Data():
                         self.n_users = max(self.n_users, user)
                         self.n_items = max(self.n_items, max(items))
                         self.n_train += len(items)
-                # with open(train_c_file) as f:
-                #     for line in f.readlines():
-                #         line = line.rstrip()
-                #         line = line.strip('\n').split(' ')
-                #         if len(line) == 0:
-                #             continue
-                #         line = [int(i) for i in line]
-                #         user = line[0]
-                #         items = line[1:]
-                #         if (len(items)==0):
-                #             continue
-                #         self.train_c_user_list[user] = items
-                #         for item in items:
-                #             self.train_c_item_list[item].append(user)
-                #         self.n_users = max(self.n_users, user)
-                #         self.n_items = max(self.n_items, max(items))
-                #         self.n_train += len(items)
+                with open(train_c_file) as f:
+                    for line in f.readlines():
+                        line = line.rstrip()
+                        line = line.strip('\n').split(' ')
+                        if len(line) == 0:
+                            continue
+                        line = [int(i) for i in line]
+                        user = line[0]
+                        items = line[1:]
+                        if (len(items)==0):
+                            continue
+                        self.train_c_user_list[user] = items
+                        self.items_c.update(set(items))
+                        for item in items:
+                            self.train_c_item_list[item].append(user)
+                        self.n_users = max(self.n_users, user)
+                        self.n_items = max(self.n_items, max(items))
+                        self.n_train += len(items)
+                    self.users_c = set(self.train_c_item_list.keys())
                 if args.valid_set == "valid":
                     with open(valid_file) as f:
                         for line in f.readlines():
@@ -351,8 +353,8 @@ class Data():
 
         countTrainItem = {}
         countTestItem = {}
-        countTrainInters = [0,0,0]
-        countTestInters = [0,0,0]
+        countTrainInters = [0, 0, 0]
+        countTestInters = [0, 0, 0]
         for i in range(self.n_users):
             for item in self.train_user_list[i]:
                 self.train_item_list[item].append(i)
@@ -540,6 +542,8 @@ class Data():
         self.valid_item_list = collections.defaultdict(list)
         self.users = set()
         self.items = set()
+        self.users_c = set()
+        self.items_c = set()
         
         #print(os.getcwd())
         
@@ -550,6 +554,8 @@ class Data():
         
         self.valid_users = list(self.valid_users)
         self.valid_items = list(self.valid_items)
+        self.users_c = list(self.users_c)
+        self.items_c = list(self.items_c)
         # self.plot_pics(args)
         print('n_items:', self.n_items, 'n_users:', self.n_users)
         sum = 0
@@ -573,7 +579,7 @@ class Data():
                 pos_items.append(rd.choice(self.train_user_list[user]))
             while True:
                 neg_item = rd.choice(self.items)
-                if neg_item not in self.train_user_list[user]:
+                if neg_item not in (self.train_user_list[user]+self.train_c_user_list[user]):
                     neg_items.append(neg_item)
                     break
 
@@ -585,10 +591,10 @@ class Data():
 
 
     def sample_c(self):
-        if self.batch_size <= self.n_users:
-            users = rd.sample(self.users, self.batch_size)
+        if self.batch_size <= len(self.users_c):
+            users = rd.sample(self.users_c, self.batch_size)
         else:
-            users = [rd.choice(self.users) for _ in range(self.batch_size)]
+            users = [rd.choice(self.users_c) for _ in range(self.batch_size)]
 
         pos_items, neg_items = [], []
 
@@ -599,7 +605,7 @@ class Data():
                 pos_items.append(rd.choice(self.train_c_user_list[user]))
             while True:
                 neg_item = rd.choice(self.items)
-                if neg_item not in self.train_c_user_list[user]:
+                if neg_item not in (self.train_user_list[user]+self.train_c_user_list[user]):
                     neg_items.append(neg_item)
                     break
 
@@ -625,7 +631,7 @@ class Data():
                 pos_items.append(rd.choice(self.valid_user_list[user]))
             while True:
                 neg_item = rd.choice(self.items)
-                if neg_item not in (self.valid_user_list[user]+self.train_user_list[user]):
+                if neg_item not in (self.valid_user_list[user]+self.train_user_list[user]+self.train_c_user_list[user]):
                     neg_items.append(neg_item)
                     break
 
@@ -646,7 +652,7 @@ class Data():
                 pos_items.append(rd.choice(self.test_user_list[user]))
             while True:
                 neg_item = rd.choice(self.items)
-                if neg_item not in (self.test_user_list[user]+self.train_user_list[user]):
+                if neg_item not in (self.test_user_list[user]+self.train_user_list[user]+self.train_c_user_list[user]):
                     neg_items.append(neg_item)
                     break
 

@@ -162,8 +162,7 @@ def valid_one_user(x):
 
     return get_performance(user_pos_valid, r, Ks)
 
-# def test(sess, model, test_users, batch_test_flag = False, model_type = 'rubi_both', valid_set="test", item_pop_test=None, pop_exp = 0):
-def test(sess, model, model_c, test_users, batch_test_flag = False, model_type = 'rubi_both', valid_set="test", item_pop_test=None, pop_exp = 0):
+def test(sess, model, model_c, test_users, batch_test_flag = False, model_type = 'o', valid_set="test", item_pop_test=None, pop_exp = 0):
 
     result = {'precision': np.zeros(len(Ks)), 'recall': np.zeros(len(Ks)), 'ndcg': np.zeros(len(Ks)),
               'hit_ratio': np.zeros(len(Ks))}
@@ -200,19 +199,19 @@ def test(sess, model, model_c, test_users, batch_test_flag = False, model_type =
                 item_batch = range(i_start, i_end)
                 if model_type == 'o':
                     i_rate_batch = sess.run(model.batch_ratings, {model.users: user_batch,
-                                                                    model.pos_items: item_batch})
+                                                                  model.pos_items: item_batch})
                 elif model_type == 'c':
                     i_rate_batch = sess.run(model.user_const_ratings, {model.users: user_batch,
-                                                                    model.pos_items: item_batch})
+                                                                       model.pos_items: item_batch})
                 elif model_type == 'ic':
                     i_rate_batch = sess.run(model.item_const_ratings, {model.users: user_batch,
-                                                                    model.pos_items: item_batch})
+                                                                       model.pos_items: item_batch})
                 elif model_type == 'rc':
                     i_rate_batch = sess.run(model.user_rand_ratings, {model.users: user_batch,
-                                                                    model.pos_items: item_batch})
+                                                                      model.pos_items: item_batch})
                 elif model_type == 'irc':
                     i_rate_batch = sess.run(model.item_rand_ratings, {model.users: user_batch,
-                                                                    model.pos_items: item_batch})
+                                                                      model.pos_items: item_batch})
                 else:
                     print('model type error.')
                     exit()
@@ -239,7 +238,6 @@ def test(sess, model, model_c, test_users, batch_test_flag = False, model_type =
                                                                 model.pos_items: item_batch})
             elif model_type == 'irc':
                 rate_batch = sess.run(model.item_rand_ratings, {model.users: user_batch,
-
                                                                 model.pos_items: item_batch})
             elif model_type == 'rubi_c':
                 rate_batch = sess.run(model.rubi_ratings, {model.users: user_batch,
@@ -251,16 +249,16 @@ def test(sess, model, model_c, test_users, batch_test_flag = False, model_type =
                 rate_batch = sess.run(model.rubi_ratings_userc, {model.users: user_batch,
                                                                  model.pos_items: item_batch})
             elif model_type == 'rubi_both':
-                # rate_batch = sess.run(model.rubi_ratings_both, {model.users: user_batch,
-                #                                                 model.pos_items: item_batch})
-
+                rate_batch = sess.run(model.rubi_ratings_both, {model.users: user_batch,
+                                                                model.pos_items: item_batch})
+            elif model_type == 'rubi_both_c':
                 rate_batch_first = sess.run(model.rubi_ratings_first, {model.users: user_batch,
-                                                                   model.pos_items: item_batch})
+                                                                       model.pos_items: item_batch})
                 rate_batch_second = sess.run(model.rubi_ratings_second, {model.users: user_batch,
-                                                                   model.pos_items: item_batch})
-                rate_batch_c = sess.run(model_c.rubi_ratings_first, {model_c.users: user_batch,
-                                                                   model_c.pos_items: item_batch})
-                rate_batch = rate_batch_first - rate_batch_c
+                                                                         model.pos_items: item_batch})
+                rate_batch_c = sess.run(model_c.batch_ratings, {model_c.users: user_batch,
+                                                                model_c.pos_items: item_batch})
+                rate_batch = rate_batch_first - rate_batch_c * rate_batch_second
             elif model_type == "item_pop_test":
                 rate_batch = sess.run(model.rubi_ratings_both_poptest, {model.users: user_batch,
                                                                         model.pos_items: item_batch})
@@ -342,6 +340,7 @@ def early_stop(hr, ndcg, recall, precision, cur_epoch, config, stopping_step, fl
     return config, stopping_step, should_stop
 
 
+# dataset: tianchi
 def submit(sess, model, users_to_submit, batch_test_flag=True, model_type='c', item_pop_test=None, pop_exp=0):
 
     u_batch_size = BATCH_SIZE
@@ -463,7 +462,7 @@ if __name__ == '__main__':
     np.random.seed(seed)
     tf.set_random_seed(seed)
 
-    logging.basicConfig(filename="{}_{}_{}_{}".format(args.model, args.dataset, args.train, args.wd))
+    # logging.basicConfig(filename="{}_{}_{}_{}".format(args.model, args.dataset, args.train, args.wd))
     os.environ["CUDA_VISIBLE_DEVICES"] = str(args.cuda)
     config = dict()
     config['n_users'] = data.n_users
@@ -526,10 +525,10 @@ if __name__ == '__main__':
                     reg_ids = compute_2i_regularization_id(items, ITEM_NUM)
                     _, batch_loss, batch_mf_loss, batch_reg_loss, batch_cf_loss = sess.run([model.opt, model.loss, model.mf_loss, model.reg_loss, model.cf_loss],
                                     feed_dict = {model.users: users,
-                                                model.pos_items: pos_items,
-                                                model.neg_items: neg_items,
-                                                model.items: items,
-                                                model.reg_items: reg_ids})
+                                                 model.pos_items: pos_items,
+                                                 model.neg_items: neg_items,
+                                                 model.items: items,
+                                                 model.reg_items: reg_ids})
                     loss += batch_loss/n_batch
                     mf_loss += batch_mf_loss/n_batch
                     reg_loss += batch_reg_loss/n_batch
@@ -598,55 +597,64 @@ if __name__ == '__main__':
                 for idx in range(n_batch):
                     users, pos_items, neg_items = data.sample()
                     users_c, pos_items_c, neg_items_c = data.sample_c()
-                    if args.train=="normal":
+                    if args.train == "normal":
                         _, batch_loss, batch_mf_loss, batch_reg_loss = sess.run([model.opt, model.loss, model.mf_loss, model.reg_loss],
                                         feed_dict = {model.users: users,
-                                                    model.pos_items: pos_items,
-                                                    model.neg_items: neg_items})
-                    elif args.train=="rubi":
+                                                     model.pos_items: pos_items,
+                                                     model.neg_items: neg_items})
+                    elif args.train == "rubi":
                         _, batch_loss, batch_mf_loss, batch_reg_loss = sess.run([model.opt_two, model.loss_two, model.mf_loss_two, model.reg_loss_two],
                                         feed_dict = {model.users: users,
-                                                    model.pos_items: pos_items,
-                                                    model.neg_items: neg_items})
-                    elif args.train=="rubibce":
+                                                     model.pos_items: pos_items,
+                                                     model.neg_items: neg_items})
+                    elif args.train == "rubibce":
                         _, batch_loss, batch_mf_loss, batch_reg_loss = sess.run([model.opt_two_bce, model.loss_two_bce, model.mf_loss_two_bce, model.reg_loss_two_bce],
                                         feed_dict = {model.users: users,
-                                                    model.pos_items: pos_items,
-                                                    model.neg_items: neg_items})   
-                    elif args.train=="normalbce":
+                                                     model.pos_items: pos_items,
+                                                     model.neg_items: neg_items})
+                    elif args.train == "normalbce":
                         _, batch_loss, batch_mf_loss, batch_reg_loss = sess.run([model.opt_bce, model.loss_bce, model.mf_loss_bce, model.reg_loss_bce],
                                         feed_dict = {model.users: users,
-                                                    model.pos_items: pos_items,
-                                                    model.neg_items: neg_items})
-                    elif args.train=="rubibceboth":
+                                                     model.pos_items: pos_items,
+                                                     model.neg_items: neg_items})
+                    elif args.train == "rubibceboth":
                         _, batch_loss, batch_mf_loss, batch_reg_loss = sess.run([model.opt_two_bce_both, model.loss_two_bce_both, model.mf_loss_two_bce_both, model.reg_loss_two_bce_both],
                                         feed_dict = {model.users: users,
-                                                    model.pos_items: pos_items,
-                                                    model.neg_items: neg_items})
-                        _, batch_loss_c, batch_mf_loss_c, batch_reg_loss_c = sess.run([model_c.opt_bce, model_c.loss_bce, model_c.mf_loss_bce, model_c.reg_loss_bce],
+                                                     model.pos_items: pos_items,
+                                                     model.neg_items: neg_items})
+                    elif args.train == "rubibceboth_c":
+                        _, batch_loss, batch_mf_loss, batch_reg_loss = sess.run([model.opt_two_bce_both, model.loss_two_bce_both, model.mf_loss_two_bce_both, model.reg_loss_two_bce_both],
+                                        feed_dict={model.users: users,
+                                                   model.pos_items: pos_items,
+                                                   model.neg_items: neg_items})
+                        _, batch_loss_c, batch_mf_loss_c, batch_reg_loss_c = sess.run([model_c.opt_two_bce_both, model_c.loss_two_bce_both, model_c.mf_loss_two_bce_both, model_c.reg_loss_two_bce_both],
                                         feed_dict={model_c.users: users_c,
                                                    model_c.pos_items: pos_items_c,
                                                    model_c.neg_items: neg_items_c})
                     loss += batch_loss/n_batch
                     mf_loss += batch_mf_loss/n_batch
                     reg_loss += batch_reg_loss/n_batch
-                    loss_c += batch_loss_c / n_batch
-                    mf_loss_c += batch_mf_loss_c / n_batch
-                    reg_loss_c += batch_reg_loss_c / n_batch
-                if np.isnan(loss) == True or np.isnan(loss_c) == True:
-                # if np.isnan(loss) == True:
+                    if args.train == "rubibceboth_c":
+                        loss_c += batch_loss_c / n_batch
+                        mf_loss_c += batch_mf_loss_c / n_batch
+                        reg_loss_c += batch_reg_loss_c / n_batch
+                if np.isnan(loss):
                     print('ERROR: loss is nan.')
+                    sys.exit()
+                if args.train == "rubibceboth_c" and np.isnan(loss_c):
+                    print('ERROR: loss_c is nan.')
                     sys.exit()
 
                 # print the test evaluation metrics each 10 epochs; pos:neg = 1:10.
                 if (epoch + 1) % args.log_interval != 0:
                     if args.verbose > 0 and epoch % args.verbose == 0:
                         perf_str = 'Epoch %d [%.1fs]: train==[%.5f=%.5f + %.5f]' % (epoch, time()-t1, loss, mf_loss, reg_loss)
-                        perf_str_c = 'Epoch %d [%.1fs]: train==[%.5f=%.5f + %.5f]' % (epoch, time()-t1, loss_c, mf_loss_c, reg_loss_c)
                         print(perf_str)
-                        print(perf_str_c)
-                        logging.info(perf_str)
-                        logging.info(perf_str_c)
+                        # logging.info(perf_str)
+                        if args.train == "rubibceboth_c":
+                            perf_str_c = 'Epoch %d [%.1fs]: train==[%.5f=%.5f + %.5f]' % (epoch, time()-t1, loss_c, mf_loss_c, reg_loss_c)
+                            print(perf_str_c)
+                            # logging.info(perf_str_c)
                     continue
 
                 t2 = time()
@@ -674,7 +682,7 @@ if __name__ == '__main__':
                                     ret['precision'][0], ret['precision'][-1], ret['hit_ratio'][0], ret['hit_ratio'][-1],
                                     ret['ndcg'][0], ret['ndcg'][-1])
                         print(perf_str)
-                        logging.info(perf_str)
+                        # logging.info(perf_str)
                 elif args.test == "rubi":
                     print('Epoch %d'%(epoch))
                     best_c = 0
@@ -684,17 +692,20 @@ if __name__ == '__main__':
                     best_pre = 0
                     c = args.c
                     model.update_c(sess, c)
-                    if args.valid_set=="test":
+                    if args.valid_set == "test":
                         if args.train == 'rubibceboth':
-                            # ret = test(sess, model, users_to_test, model_type="rubi_both", valid_set="test")
                             ret = test(sess, model, model_c, users_to_test, model_type="rubi_both", valid_set="test")
+                        elif args.train == 'rubibceboth_c':
+                            ret = test(sess, model, model_c, users_to_test, model_type="rubi_both_c", valid_set="test")
                         else:
-                            ret = test(sess, model, users_to_test, model_type="rubi_c", valid_set="test")
-                    elif args.valid_set=="valid":
+                            ret = test(sess, model, model_c, users_to_test, model_type="rubi_c", valid_set="test")
+                    elif args.valid_set == "valid":
                         if args.train == 'rubibceboth':
-                            ret = test(sess, model, users_to_test, model_type="rubi_both", valid_set="valid")
+                            ret = test(sess, model, model_c, users_to_test, model_type="rubi_both", valid_set="valid")
+                        elif args.train == 'rubibceboth_c':
+                            ret = test(sess, model, model_c, users_to_test, model_type="rubi_both_c", valid_set="valid")
                         else:
-                            ret = test(sess, model, users_to_test, model_type="rubi_c", valid_set="valid")
+                            ret = test(sess, model, model_c,  users_to_test, model_type="rubi_c", valid_set="valid")
                     t3 = time()
                     loss_loger.append(loss)
                     rec_loger.append(ret['recall'][0])
@@ -704,9 +715,9 @@ if __name__ == '__main__':
 
                     if ret['hit_ratio'][0] > best_hr:
                         best_hr = ret['hit_ratio'][0]
-                        best_recall=ret['recall'][0]
-                        best_pre=ret['precision'][0]
-                        best_ndcg=ret['ndcg'][0]
+                        best_recall = ret['recall'][0]
+                        best_pre = ret['precision'][0]
+                        best_ndcg = ret['ndcg'][0]
                         best_c = c
 
                     if args.verbose > 0:
@@ -716,36 +727,36 @@ if __name__ == '__main__':
                                     ret['precision'][0], ret['precision'][-1], ret['hit_ratio'][0], ret['hit_ratio'][-1],
                                     ret['ndcg'][0], ret['ndcg'][-1])
                         print(perf_str)
-                        logging.info(perf_str)
+                        # logging.info(perf_str)
 
-                    ret['hit_ratio'][0]=best_hr
-                    ret['recall'][0]=best_recall
-                    ret['precision'][0]=best_pre
-                    ret['ndcg'][0]=best_ndcg
+                    ret['hit_ratio'][0] = best_hr
+                    ret['recall'][0] = best_recall
+                    ret['precision'][0] = best_pre
+                    ret['ndcg'][0] = best_ndcg
 
                 # *********************************************************
                 # save the user & item embeddings for pretraining.
-                config, stopping_step, should_stop = early_stop(ret['hit_ratio'][0], ret['ndcg'][0], ret['recall'][0], ret['precision'][0], epoch, config, stopping_step)
-                if args.save_flag == 1:
-                    if os.path.exists('{}_{}_checkpoint/wd_{}_lr_{}_{}/'.format(args.model, args.dataset, args.wd, args.lr, args.saveID)) == False:
-                        os.makedirs('{}_{}_checkpoint/wd_{}_lr_{}_{}/'.format(args.model, args.dataset, args.wd, args.lr, args.saveID))
-                    saver.save(sess, '{}_{}_checkpoint/wd_{}_lr_{}_{}/{}_ckpt.ckpt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID, epoch))
+                # config, stopping_step, should_stop = early_stop(ret['hit_ratio'][0], ret['ndcg'][0], ret['recall'][0], ret['precision'][0], epoch, config, stopping_step)
+                # if args.save_flag == 1:
+                #     if os.path.exists('{}_{}_checkpoint/wd_{}_lr_{}_{}/'.format(args.model, args.dataset, args.wd, args.lr, args.saveID)) == False:
+                #         os.makedirs('{}_{}_checkpoint/wd_{}_lr_{}_{}/'.format(args.model, args.dataset, args.wd, args.lr, args.saveID))
+                #     saver.save(sess, '{}_{}_checkpoint/wd_{}_lr_{}_{}/{}_ckpt.ckpt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID, epoch))
+                #
+                # if should_stop and args.early_stop == 1:
+                #     print("{} dataset best epoch {}: hr:{} ndcg:{} recall:{} precision:{}".format(args.dataset, config['best_epoch'],config['best_hr'],config['best_ndcg'], config['best_recall'], config['best_pre']))
+                #     # logging.info("{} dataset best epoch{}: hr:{} ndcg:{} recall:{} precision:{}".format(args.dataset, config['best_epoch'],config['best_hr'],config['best_ndcg'], config['best_recall'], config['best_pre']))
+                #
+                #     with open('{}_{}_checkpoint/wd_{}_lr_{}_{}/best_epoch.txt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID),'w') as f:
+                #         print(config['best_epoch'], file = f)
+                #
+                #     if args.test == 'rubi':
+                #         with open('{}_{}_checkpoint/wd_{}_lr_{}_{}/best_c.txt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID),'w') as f:
+                #             print(config['best_c'], file = f)
+                #
+                #     break
 
-                if should_stop and args.early_stop == 1:
-                    print("{} dataset best epoch {}: hr:{} ndcg:{} recall:{} precision:{}".format(args.dataset, config['best_epoch'],config['best_hr'],config['best_ndcg'], config['best_recall'], config['best_pre']))
-                    logging.info("{} dataset best epoch{}: hr:{} ndcg:{} recall:{} precision:{}".format(args.dataset, config['best_epoch'],config['best_hr'],config['best_ndcg'], config['best_recall'], config['best_pre']))
-
-                    with open('{}_{}_checkpoint/wd_{}_lr_{}_{}/best_epoch.txt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID),'w') as f:
-                        print(config['best_epoch'], file = f)
-
-                    if args.test=='rubi':
-                        with open('{}_{}_checkpoint/wd_{}_lr_{}_{}/best_c.txt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID),'w') as f:
-                            print(config['best_c'], file = f)
-
-                    break
-
+            # submit
             if args.dataset == 'tianchi_df' or args.dataset == 'tianchi_sample':
-                # submit
                 data_path = 'MACR/data/{}/submit.csv'.format(args.dataset)
                 users_to_submit = np.loadtxt(data_path, dtype=int, skiprows=1, delimiter=',')
                 submit(sess, model, users_to_submit)

@@ -33,7 +33,7 @@ MACR MF:
 
 tianchi_df
 ```Python
-python MACR/macr_mf/train.py --dataset tianchi_df --batch_size 1024 --cuda 1 --saveID 1 --log_interval 10 --lr 0.001 --train normalbce --test normal
+python MACR/macr_mf/train.py --dataset tianchi_df --batch_size 256 --cuda 0 --saveID 1 --log_interval 10 --lr 0.001 --train normalbce --test normal --epoch 50
 ```
 
 ML10M

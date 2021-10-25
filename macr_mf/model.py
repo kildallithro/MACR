@@ -61,11 +61,11 @@ class BPRMF:
         self.sigmoid_yu = tf.squeeze(tf.nn.sigmoid(tf.matmul(self.weights['user_embedding'], self.w_user)))
         self.sigmoid_yi = tf.squeeze(tf.nn.sigmoid(tf.matmul(self.weights['item_embedding'], self.w)))
         # two branch bpr
-        self.mf_loss_two, self.reg_loss_two = self.create_bpr_loss_two_brach(user_embedding, pos_item_embedding, neg_item_embedding)
+        self.mf_loss_two, self.reg_loss_two = self.create_bpr_loss_two_branch(user_embedding, pos_item_embedding, neg_item_embedding)
         self.loss_two = self.mf_loss_two + self.reg_loss_two
         self.opt_two = tf.train.AdamOptimizer(learning_rate=self.lr).minimize(self.loss_two)
         # two branch bce
-        self.mf_loss_two_bce, self.reg_loss_two_bce = self.create_bce_loss_two_brach(user_embedding, pos_item_embedding, neg_item_embedding)
+        self.mf_loss_two_bce, self.reg_loss_two_bce = self.create_bce_loss_two_branch(user_embedding, pos_item_embedding, neg_item_embedding)
         self.loss_two_bce = self.mf_loss_two_bce + self.reg_loss_two_bce
         self.opt_two_bce = tf.train.AdamOptimizer(learning_rate=self.lr).minimize(self.loss_two_bce)
         # two branch bce user&item
@@ -121,8 +121,8 @@ class BPRMF:
 
         return weights
 
-    def create_bpr_loss_two_brach(self, users, pos_items, neg_items):
-        pos_scores = tf.reduce_sum(tf.multiply(users, pos_items), axis=1)   #users, pos_items, neg_items have the same shape
+    def create_bpr_loss_two_branch(self, users, pos_items, neg_items):
+        pos_scores = tf.reduce_sum(tf.multiply(users, pos_items), axis=1)  # users, pos_items, neg_items have the same shape
         neg_scores = tf.reduce_sum(tf.multiply(users, neg_items), axis=1)
         # item stop
 
@@ -132,8 +132,8 @@ class BPRMF:
         pos_items_stop = pos_items
         neg_items_stop = neg_items
 
-        self.pos_item_scores = tf.matmul(pos_items_stop,self.w)
-        self.neg_item_scores = tf.matmul(neg_items_stop,self.w)
+        self.pos_item_scores = tf.matmul(pos_items_stop, self.w)
+        self.neg_item_scores = tf.matmul(neg_items_stop, self.w)
         # first branch
         pos_scores = pos_scores*tf.nn.sigmoid(self.pos_item_scores)
         neg_scores = neg_scores*tf.nn.sigmoid(self.neg_item_scores)
@@ -155,7 +155,7 @@ class BPRMF:
         reg_loss = self.decay * regularizer
         return mf_loss, reg_loss
 
-    def create_bce_loss_two_brach(self, users, pos_items, neg_items):
+    def create_bce_loss_two_branch(self, users, pos_items, neg_items):
         pos_scores = tf.reduce_sum(tf.multiply(users, pos_items), axis=1)   #users, pos_items, neg_items have the same shape
         neg_scores = tf.reduce_sum(tf.multiply(users, neg_items), axis=1)
         # item score
@@ -205,10 +205,8 @@ class BPRMF:
         # fusion
         pos_scores = pos_scores*tf.nn.sigmoid(self.pos_item_scores)*tf.nn.sigmoid(self.user_scores)
         neg_scores = neg_scores*tf.nn.sigmoid(self.neg_item_scores)*tf.nn.sigmoid(self.user_scores)
-
         # pos_scores = pos_scores*(tf.nn.sigmoid(self.pos_item_scores)+tf.nn.sigmoid(self.user_scores))
         # neg_scores = neg_scores*(tf.nn.sigmoid(self.neg_item_scores)+tf.nn.sigmoid(self.user_scores))
-
 
         self.mf_loss_ori = tf.reduce_mean(tf.negative(tf.log(tf.nn.sigmoid(pos_scores)+1e-10))+tf.negative(tf.log(1-tf.nn.sigmoid(neg_scores)+1e-10)))
         # second branch
