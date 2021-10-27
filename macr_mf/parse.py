@@ -52,7 +52,7 @@ def parse_args():
                         help='Train/Test.')
     parser.add_argument('--save_flag', type=int, default=1,
                         help='0: Disable model saver, 1: Activate model saver')
-    parser.add_argument('--cuda', type=str, default='0',
+    parser.add_argument('--cuda', type=str, default='1',
                         help='Avaiable GPU ID')
     parser.add_argument('--pretrain', type=int, default=0,
                         help='0: no pretrain, 1: load pretrain model')

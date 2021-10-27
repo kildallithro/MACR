@@ -259,6 +259,7 @@ def test(sess, model, model_c, test_users, batch_test_flag = False, model_type =
                 rate_batch_c = sess.run(model_c.batch_ratings, {model_c.users: user_batch,
                                                                 model_c.pos_items: item_batch})
                 rate_batch = rate_batch_first - rate_batch_c * rate_batch_second
+                # print('c:%.2f' % np.array(rate_batch, dtype=int))
             elif model_type == "item_pop_test":
                 rate_batch = sess.run(model.rubi_ratings_both_poptest, {model.users: user_batch,
                                                                         model.pos_items: item_batch})
@@ -736,24 +737,24 @@ if __name__ == '__main__':
 
                 # *********************************************************
                 # save the user & item embeddings for pretraining.
-                # config, stopping_step, should_stop = early_stop(ret['hit_ratio'][0], ret['ndcg'][0], ret['recall'][0], ret['precision'][0], epoch, config, stopping_step)
-                # if args.save_flag == 1:
-                #     if os.path.exists('{}_{}_checkpoint/wd_{}_lr_{}_{}/'.format(args.model, args.dataset, args.wd, args.lr, args.saveID)) == False:
-                #         os.makedirs('{}_{}_checkpoint/wd_{}_lr_{}_{}/'.format(args.model, args.dataset, args.wd, args.lr, args.saveID))
-                #     saver.save(sess, '{}_{}_checkpoint/wd_{}_lr_{}_{}/{}_ckpt.ckpt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID, epoch))
-                #
-                # if should_stop and args.early_stop == 1:
-                #     print("{} dataset best epoch {}: hr:{} ndcg:{} recall:{} precision:{}".format(args.dataset, config['best_epoch'],config['best_hr'],config['best_ndcg'], config['best_recall'], config['best_pre']))
-                #     # logging.info("{} dataset best epoch{}: hr:{} ndcg:{} recall:{} precision:{}".format(args.dataset, config['best_epoch'],config['best_hr'],config['best_ndcg'], config['best_recall'], config['best_pre']))
-                #
-                #     with open('{}_{}_checkpoint/wd_{}_lr_{}_{}/best_epoch.txt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID),'w') as f:
-                #         print(config['best_epoch'], file = f)
-                #
-                #     if args.test == 'rubi':
-                #         with open('{}_{}_checkpoint/wd_{}_lr_{}_{}/best_c.txt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID),'w') as f:
-                #             print(config['best_c'], file = f)
-                #
-                #     break
+                config, stopping_step, should_stop = early_stop(ret['hit_ratio'][0], ret['ndcg'][0], ret['recall'][0], ret['precision'][0], epoch, config, stopping_step)
+                if args.save_flag == 1:
+                    if os.path.exists('{}_{}_checkpoint/wd_{}_lr_{}_{}/'.format(args.model, args.dataset, args.wd, args.lr, args.saveID)) == False:
+                        os.makedirs('{}_{}_checkpoint/wd_{}_lr_{}_{}/'.format(args.model, args.dataset, args.wd, args.lr, args.saveID))
+                    saver.save(sess, '{}_{}_checkpoint/wd_{}_lr_{}_{}/{}_ckpt.ckpt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID, epoch))
+
+                if should_stop and args.early_stop == 1:
+                    print("{} dataset best epoch {}: hr:{} ndcg:{} recall:{} precision:{}".format(args.dataset, config['best_epoch'],config['best_hr'],config['best_ndcg'], config['best_recall'], config['best_pre']))
+                    # logging.info("{} dataset best epoch{}: hr:{} ndcg:{} recall:{} precision:{}".format(args.dataset, config['best_epoch'],config['best_hr'],config['best_ndcg'], config['best_recall'], config['best_pre']))
+
+                    with open('{}_{}_checkpoint/wd_{}_lr_{}_{}/best_epoch.txt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID),'w') as f:
+                        print(config['best_epoch'], file = f)
+
+                    if args.test == 'rubi':
+                        with open('{}_{}_checkpoint/wd_{}_lr_{}_{}/best_c.txt'.format(args.model, args.dataset, args.wd, args.lr, args.saveID),'w') as f:
+                            print(config['best_c'], file = f)
+
+                    break
 
             # submit
             if args.dataset == 'tianchi_df' or args.dataset == 'tianchi_sample':
